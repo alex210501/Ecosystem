@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ecosystem.src.models
+namespace Ecosystem
 {
     public abstract class Herbivore : Animal
     {

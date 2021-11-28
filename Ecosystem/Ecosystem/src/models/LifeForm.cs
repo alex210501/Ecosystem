@@ -18,16 +18,13 @@ namespace Ecosystem
         private float health = 100;
         private float energy = 100;
         private float reproductionDesire = 0;
-        public bool IsAlive { get; set; } = true;
+        private bool isAlive = true;
         
         public LifeForm() { }
 
         public float Health
         {
-            get
-            {
-                return health;
-            }
+            get { return health; }
             set
             {
                 health += value;
@@ -44,10 +41,7 @@ namespace Ecosystem
 
         public float Energy
         {
-            get
-            {
-                return energy;
-            }
+            get { return energy; }
             set
             {
                 energy += energy;
@@ -60,10 +54,7 @@ namespace Ecosystem
 
         public float ReproductionDesire
         {
-            get
-            {
-                return reproductionDesire;
-            }
+            get { return reproductionDesire; }
             set
             {
                 reproductionDesire += value;
@@ -72,6 +63,12 @@ namespace Ecosystem
 
                 if (reproductionDesire < 0) reproductionDesire = 0;
             }
+        }
+
+        public bool IsAlive
+        {
+            get { return isAlive; }
+            set { isAlive = value; }
         }
 
         // TODO: Create the IEatable interface
