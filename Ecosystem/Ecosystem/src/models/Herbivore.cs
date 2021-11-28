@@ -4,8 +4,10 @@ using System.Text;
 
 namespace Ecosystem.src.models
 {
-    public abstract class Herbivore
+    public abstract class Herbivore : Animal
     {
+        protected Herbivore(int visionZoneRadius, int contactZoneRadius, float speed) : base (visionZoneRadius, contactZoneRadius, speed) { }
+
         // TODO: Implement the Eat method when the Plant is created
         public override void Eat(IEatable food)
         {
