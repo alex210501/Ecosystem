@@ -18,8 +18,8 @@ namespace Ecosystem
         private float health = 100;
         private float energy = 100;
         private float reproductionDesire = 0;
-        private bool IsAlive { get; set; } = true;
-
+        public bool IsAlive { get; set; } = true;
+        
         public LifeForm() { }
 
         public float Health
