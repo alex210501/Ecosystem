@@ -25,7 +25,7 @@ namespace Ecosystem
         private float hunger = 0;
         private float poopDesire = 0;
 
-        Animal(int visionZoneRadius, int contactZoneRadius, float speed)
+        protected Animal(int visionZoneRadius, int contactZoneRadius, float speed)
         {
             this.visionZoneRadius = visionZoneRadius;
             this.contactZoneRadius = contactZoneRadius;
