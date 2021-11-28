@@ -6,11 +6,16 @@ namespace Ecosystem.src.models
 {
     public abstract class Carnivore : Animal
     {
-        private int damage;
+        private float damage; // Damages per seconds
 
-        protected Carnivore(int visionZoneRadius, int contactZoneRadius, float speed, int damage) : base(visionZoneRadius, contactZoneRadius, speed)
+        protected Carnivore(int visionZoneRadius, int contactZoneRadius, float speed, float damage) : base(visionZoneRadius, contactZoneRadius, speed)
         {
             this.damage = damage;
+        }
+
+        public float Damage
+        {
+            get { return damage; }
         }
 
         // TODO: Implement the Eat method when the Meat is created
