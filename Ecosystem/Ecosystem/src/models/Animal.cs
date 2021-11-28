@@ -16,8 +16,9 @@ namespace Ecosystem
         private static readonly float reproductionDesireThreshold = 70;
         private static readonly float poopThreshold = 70;
         private static readonly float hungerThreshold = 70;
-        private static int maximumChild = 12;
-        private static int minimumChild = 0;
+        private int maximumChild = 12;
+        private int minimumChild = 0;
+        private int maximumPregnancyTime = 0;
 
         private readonly AnimalSex sex;
         private int visionZoneRadius;
@@ -27,6 +28,7 @@ namespace Ecosystem
         private float hunger = 0;
         private float poopDesire = 0;
         private int numberChild = 0;
+        private float pregnancyTime = 0;
 
         protected Animal(AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed)
         {
@@ -41,6 +43,24 @@ namespace Ecosystem
             get { return sex; }
         }
 
+        public int MaximumChild
+        {
+            get { return maximumChild; }
+            private set { maximumChild = value; }
+        }
+
+        public int MinimumChild
+        {
+            get { return minimumChild; }
+            private set { minimumChild = value; }
+        }
+
+        public int MaximumPregnancyTime
+        {
+            get { return maximumPregnancyTime; }
+            set { maximumPregnancyTime = value; }
+        }
+
         public int VisionZoneRadius
         {
             get { return visionZoneRadius; }
@@ -53,7 +73,7 @@ namespace Ecosystem
 
         public bool IsPregnant
         {
-            get { return isPregnant;  }
+            get { return isPregnant; }
             set { isPregnant = value; }
         }
 
@@ -80,6 +100,12 @@ namespace Ecosystem
             private set { numberChild = value; }
         }
 
+        public float PregnancyTime
+        {
+            get { return pregnancyTime; }
+            set { pregnancyTime = value; }
+        }
+
         public void Reproduction(Animal animal)
         {
             if (Sex != animal.Sex)
@@ -92,10 +118,12 @@ namespace Ecosystem
             }
         }
 
-        // TODO: Implement the CanGiveBirht function
         public bool CanGiveBirth()
         {
-            return true;
+            if (isPregnant == false)
+                return false;
+
+            return (pregnancyTime >= maximumPregnancyTime);
         }
 
         public void SetPregnant(int numberChild)
@@ -104,6 +132,7 @@ namespace Ecosystem
                 return;
 
             IsPregnant = true;
+            pregnancyTime = 0;
             this.numberChild = numberChild;
         }
 
@@ -121,7 +150,5 @@ namespace Ecosystem
         {
             return (poopDesire >= poopThreshold);
         }
-
-
     }
 }
