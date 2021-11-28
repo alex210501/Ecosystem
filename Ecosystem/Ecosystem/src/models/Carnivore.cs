@@ -8,7 +8,7 @@ namespace Ecosystem
     {
         private float damage; // Damages per seconds
 
-        protected Carnivore(int visionZoneRadius, int contactZoneRadius, float speed, float damage) : base(visionZoneRadius, contactZoneRadius, speed)
+        protected Carnivore(AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed, float damage) : base(sex, visionZoneRadius, contactZoneRadius, speed)
         {
             this.damage = damage;
         }

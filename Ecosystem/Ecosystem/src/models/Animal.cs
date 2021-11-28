@@ -16,6 +16,8 @@ namespace Ecosystem
         private static readonly float reproductionDesireThreshold = 70;
         private static readonly float poopThreshold = 70;
         private static readonly float hungerThreshold = 70;
+        private static int maximumChild = 12;
+        private static int minimumChild = 0;
 
         private readonly AnimalSex sex;
         private int visionZoneRadius;
@@ -24,9 +26,11 @@ namespace Ecosystem
         private readonly float speed = 100; // Pixel per second
         private float hunger = 0;
         private float poopDesire = 0;
+        private int numberChild = 0;
 
-        protected Animal(int visionZoneRadius, int contactZoneRadius, float speed)
+        protected Animal(AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed)
         {
+            this.sex = sex;
             this.visionZoneRadius = visionZoneRadius;
             this.contactZoneRadius = contactZoneRadius;
             this.speed = speed;
@@ -70,12 +74,37 @@ namespace Ecosystem
             private set { poopDesire = value; }
         }
 
-        public abstract void Reproduction(Animal animal);
+        public int NumberChild
+        {
+            get { return numberChild; }
+            private set { numberChild = value; }
+        }
+
+        public void Reproduction(Animal animal)
+        {
+            if (Sex != animal.Sex)
+            {
+                Random random = new Random();
+                int numberChild = random.Next(minimumChild, maximumChild);
+
+                if (Sex == AnimalSex.Male) animal.SetPregnant(numberChild);
+                else SetPregnant(numberChild);
+            }
+        }
 
         // TODO: Implement the CanGiveBirht function
         public bool CanGiveBirth()
         {
             return true;
+        }
+
+        public void SetPregnant(int numberChild)
+        {
+            if ((numberChild == 0) || IsPregnant)
+                return;
+
+            IsPregnant = true;
+            this.numberChild = numberChild;
         }
 
         public bool IsHungry()

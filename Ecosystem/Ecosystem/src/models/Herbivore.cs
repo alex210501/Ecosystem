@@ -6,7 +6,7 @@ namespace Ecosystem
 {
     public abstract class Herbivore : Animal
     {
-        protected Herbivore(int visionZoneRadius, int contactZoneRadius, float speed) : base (visionZoneRadius, contactZoneRadius, speed) { }
+        protected Herbivore(AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed) : base (sex, visionZoneRadius, contactZoneRadius, speed) { }
 
         // TODO: Implement the Eat method when the Plant is created
         public override void Eat(IEatable food)
