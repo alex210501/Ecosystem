@@ -8,7 +8,7 @@ using System.Text;
 namespace Ecosystem
 {
     // TODO: Update the diagram for constant variable
-    public abstract class Animal
+    public abstract class LifeForm
     {
         private static readonly float maxHealth = 100;
         private static readonly float maxEnergy = 100;
@@ -20,7 +20,7 @@ namespace Ecosystem
         private float reproductionDesire = 0;
         private bool IsAlive { get; set; } = true;
 
-        public Animal() { }
+        public LifeForm() { }
 
         public float Health
         {
