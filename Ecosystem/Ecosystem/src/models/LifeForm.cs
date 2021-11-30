@@ -13,7 +13,7 @@ namespace Ecosystem
         private static readonly float maxHealth = 100;
         private static readonly float maxEnergy = 100;
         private static readonly float maxReproductionDesire = 100;
-        private static readonly float energyToGivePerSecond = 2; // Energy to give per second, when we convert energy to life
+        private static readonly float healthToGivePerSecond = 2; // Life to give per second, when we convert life to energy
 
         private float health = 100;
         private float energy = 100;
@@ -74,12 +74,12 @@ namespace Ecosystem
         // TODO: Create the IEatable interface
         public abstract void Eat(IEatable food);
 
-        void EnergyToLife(float timeElapsed)
+        void LifeToEnergy(float timeElapsed)
         {
-            float energyToGive = energyToGivePerSecond * timeElapsed;
+            float healthToGive = healthToGivePerSecond * timeElapsed;
 
-            Energy -= energyToGive;
-            Health += energyToGive;
+            Energy += healthToGive;
+            Health -= healthToGive;
         }
     }
 }
