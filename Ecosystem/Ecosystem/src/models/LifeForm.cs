@@ -14,6 +14,8 @@ namespace Ecosystem
         private static readonly float maxEnergy = 100;
         private static readonly float maxReproductionDesire = 100;
         private static readonly float healthToGivePerSecond = 2; // Life to give per second, when we convert life to energy
+        private static readonly float reproductionDesireThreshold = 70;
+        private static readonly float hungerThreshold = 70;
 
         private float health = 100;
         private float energy = 100;

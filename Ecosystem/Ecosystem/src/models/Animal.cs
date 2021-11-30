@@ -13,9 +13,7 @@ namespace Ecosystem
     // TODO: Think for IsInVisionZone(), IsInContactZone(), Walk()
     public abstract class Animal : LifeForm
     {
-        private static readonly float reproductionDesireThreshold = 70;
         private static readonly float poopThreshold = 70;
-        private static readonly float hungerThreshold = 70;
         private int maximumChild = 12;
         private int minimumChild = 0;
         private int maximumPregnancyTime = 0;
