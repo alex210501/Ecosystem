@@ -28,7 +28,6 @@ namespace Ecosystem
             }
         }
 
-        // TODO: Implement the CanHeat method when the Meat is created
         public bool CanEat(IEatable food)
         {
             return (food is Meat);

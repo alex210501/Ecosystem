@@ -73,7 +73,6 @@ namespace Ecosystem
             set { isAlive = value; }
         }
 
-        // TODO: Create the IEatable interface
         public abstract void Eat(IEatable food);
 
         void LifeToEnergy(float timeElapsed)

@@ -6,5 +6,6 @@ namespace Ecosystem
 {
     public abstract class NonLifeForm
     {
+        public NonLifeForm() { }
     }
 }

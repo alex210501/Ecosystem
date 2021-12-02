@@ -9,7 +9,11 @@ namespace Ecosystem
         private float eatingEnergy = 0;
         private float satiationPoint = 0;
 
-        OrganicWaste() : base() { }
+        public OrganicWaste(float eatingEnergy, float satiationPoint) : base()
+        {
+            this.eatingEnergy = eatingEnergy;
+            this.satiationPoint = satiationPoint;
+        }
 
         public float EatingEnergy
         {
