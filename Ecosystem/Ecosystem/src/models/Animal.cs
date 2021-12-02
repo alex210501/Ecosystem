@@ -83,7 +83,7 @@ namespace Ecosystem
         public float Hunger
         {
             get { return hunger; }
-            private set { hunger = value; }
+            protected set { hunger = value; }
         }
 
         public float PoopDesire

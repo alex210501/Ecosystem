@@ -21,13 +21,17 @@ namespace Ecosystem
         // TODO: Implement the Eat method when the Meat is created
         public override void Eat(IEatable food)
         {
-            return;
+            if (CanEat(food))
+            {
+                Energy += food.EatingEnergy;
+                Hunger += food.SatiationPoint;
+            }
         }
 
         // TODO: Implement the CanHeat method when the Meat is created
         public bool CanEat(IEatable food)
         {
-            return false;
+            return (food is Meat);
         }
 
         public void Attack(Animal prey)
