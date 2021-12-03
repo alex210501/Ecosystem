@@ -8,16 +8,18 @@ namespace Ecosystem
     {
         protected Herbivore(AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed) : base (sex, visionZoneRadius, contactZoneRadius, speed) { }
 
-        // TODO: Implement the Eat method when the Plant is created
         public override void Eat(IEatable food)
         {
-            return;
+            if (CanEat(food))
+            {
+                Energy += food.EatingEnergy;
+                Hunger += food.SatiationPoint;
+            }
         }
 
-        // TODO: Implement the CanHeat method when the Plant is created
         public bool CanEat(IEatable food)
         {
-            return false;
+            return (food is Plants);
         }
     }
 }

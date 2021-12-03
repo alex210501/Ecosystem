@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ecosystem.src.models
+namespace Ecosystem
 {
     public class Plants : LifeForm, IEatable
     {
@@ -16,22 +16,32 @@ namespace Ecosystem.src.models
         */
         private float eatingEnergy = 0;
         private float satiationPoint = 0;
+
         public Plants(int RootZoneRadius, int SeedingZoneRadius) : base()
         {
             this.RootZoneRadius = RootZoneRadius;
             this.SeedingZoneRadius = SeedingZoneRadius;
         }
+
         public override void Eat(IEatable food)
         {
-            //TODO: implement this class
-            return;
+            if (CanEat(food))
+            {
+                Energy += food.EatingEnergy;
+                Hunger += food.SatiationPoint;
+            }
         }
 
-        public bool WantsExpends()
+        public bool CanEat(IEatable food)
         {
-            //TODO: implement this class
+            return (food is OrganicWaste);
+        }
+
+        public bool WantsExpands(IEatable food)
+        {
             return true;
         }
+
         public float EatingEnergy
         {
             get { return eatingEnergy; }

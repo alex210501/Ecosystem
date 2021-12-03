@@ -19,6 +19,7 @@ namespace Ecosystem
 
         private float health = 100;
         private float energy = 100;
+        private float hunger = 0;
         private float reproductionDesire = 0;
         private bool isAlive = true;
         
@@ -54,6 +55,12 @@ namespace Ecosystem
             }
         }
 
+        public float Hunger
+        {
+            get { return hunger; }
+            protected set { hunger = value; }
+        }
+
         public float ReproductionDesire
         {
             get { return reproductionDesire; }
@@ -71,6 +78,11 @@ namespace Ecosystem
         {
             get { return isAlive; }
             set { isAlive = value; }
+        }
+
+        public bool IsHungry()
+        {
+            return (Hunger >= hungerThreshold);
         }
 
         public abstract void Eat(IEatable food);

@@ -23,7 +23,6 @@ namespace Ecosystem
         private int contactZoneRadius;
         private bool isPregnant = false;
         private readonly float speed = 100; // Pixel per second
-        private float hunger = 0;
         private float poopDesire = 0;
         private int numberChild = 0;
         private float pregnancyTime = 0;
@@ -80,12 +79,6 @@ namespace Ecosystem
             get { return (speed * (Health / 100) * (Energy / 100)); }
         }
 
-        public float Hunger
-        {
-            get { return hunger; }
-            protected set { hunger = value; }
-        }
-
         public float PoopDesire
         {
             get { return poopDesire; }
@@ -132,11 +125,6 @@ namespace Ecosystem
             IsPregnant = true;
             pregnancyTime = 0;
             this.numberChild = numberChild;
-        }
-
-        public bool IsHungry()
-        {
-            return (hunger >= hungerThreshold);
         }
 
         public bool WantReproduce()
