@@ -53,7 +53,13 @@ namespace MonogameSprite
         public int PositionY
         {
             get { return positionY + (frameHeight / 2); }
-            set { positionY = value - (frameHeight / 2); } 
+            set { positionY = value - (frameHeight / 2); }
+        }
+
+        public float Scale
+        {
+            get { return scale; }
+            set { scale = value; }
         }
 
         public void Load()
@@ -82,7 +88,7 @@ namespace MonogameSprite
         {
             if (totalFrame > 0)
             {
-                Rectangle destination = new Rectangle(positionX, positionY, frameWidth, frameHeight);
+                Rectangle destination = new Rectangle(positionX, positionY, (int)(frameWidth * scale), (int)(frameHeight * scale));
                 Rectangle source = new Rectangle(0, 0, frame[currentFrame].Width, frame[currentFrame].Height);
 
                 spriteBatch.Begin();
