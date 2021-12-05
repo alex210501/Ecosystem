@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 
 namespace Ecosystem
 {
     public class Sprite
     {
+        ContentManager content;
         private GraphicsDevice device;
         private SpriteBatch spriteBatch;
         private float timePerFrame = 100;
@@ -22,8 +24,9 @@ namespace Ecosystem
         private float scale = 1;
         private List<Texture2D> frame;
 
-        public Sprite(GraphicsDevice device, float timePerFrame, int frameWidth, int frameHeight)
+        public Sprite(ContentManager content,GraphicsDevice device, float timePerFrame, int frameWidth, int frameHeight)
         {
+            this.content = content;
             this.device = device;
             this.timePerFrame = timePerFrame;
             this.frameWidth = frameWidth;
@@ -67,9 +70,9 @@ namespace Ecosystem
             spriteBatch = new SpriteBatch(this.device);
         }
 
-        public void AddTexture(Texture2D texture)
+        public void AddTexture(string texturePath)
         {
-            frame.Add(texture);
+            frame.Add(content.Load<Texture2D>(texturePath));
             totalFrame++;
         }
 
