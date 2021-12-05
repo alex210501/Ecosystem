@@ -8,14 +8,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Ecosystem
 {
-    public class Herbizarre : Herbivore
+    public class Groudon : Herbivore
     {
-        private static int timePerFrame = 100;
-        private static int widthFrame = 40;
-        private static int heightFrame = 30;
+        private static int timePerFrame = 200;
+        private static int widthFrame = 60;
+        private static int heightFrame = 60;
 
-        public Herbizarre(ContentManager content, GraphicsDevice device, AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed) : 
-            base (sex, visionZoneRadius, contactZoneRadius, speed)
+        public Groudon(ContentManager content, GraphicsDevice device, AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed) :
+            base(sex, visionZoneRadius, contactZoneRadius, speed)
         {
             this.Sprite = new Sprite(content, device, timePerFrame, widthFrame, heightFrame);
         }
@@ -37,9 +37,8 @@ namespace Ecosystem
 
         public override void Load()
         {
-            Sprite.AddTexture("Pictures/Herbizarre/Herbizarre0");
-            Sprite.AddTexture("Pictures/Herbizarre/Herbizarre1");
-            Sprite.AddTexture("Pictures/Herbizarre/Herbizarre2");
+            Sprite.AddTexture("Pictures/Groudon/Groudon0");
+            Sprite.AddTexture("Pictures/Groudon/Groudon1");
 
             base.Load();
         }
