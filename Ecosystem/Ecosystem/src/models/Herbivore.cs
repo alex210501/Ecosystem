@@ -6,7 +6,8 @@ namespace Ecosystem
 {
     public abstract class Herbivore : Animal
     {
-        protected Herbivore(AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed) : base (sex, visionZoneRadius, contactZoneRadius, speed) { }
+        protected Herbivore(AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed) : 
+            base (sex, visionZoneRadius, contactZoneRadius, speed) { }
 
         public override void Eat(IEatable food)
         {

@@ -27,7 +27,8 @@ namespace Ecosystem
         private int numberChild = 0;
         private float pregnancyTime = 0;
 
-        protected Animal(AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed)
+        protected Animal(AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed) :
+            base()
         {
             this.sex = sex;
             this.visionZoneRadius = visionZoneRadius;

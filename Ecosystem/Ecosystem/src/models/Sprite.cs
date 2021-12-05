@@ -41,10 +41,10 @@ namespace Ecosystem
             protected set { frameWidth = value; }
         }
 
-        public int HeightWidth
+        public int FrameHeight
         {
-            get { return HeightWidth; }
-            protected set { HeightWidth = value; }
+            get { return frameHeight; }
+            protected set { frameHeight = value; }
         }
 
         public int PositionX
@@ -72,6 +72,7 @@ namespace Ecosystem
 
         public void AddTexture(string texturePath)
         {
+            Console.WriteLine("here");
             frame.Add(content.Load<Texture2D>(texturePath));
             totalFrame++;
         }

@@ -14,26 +14,34 @@ namespace Ecosystem
         private static int widthFrame = 40;
         private static int heightFrame = 30;
 
-        private Sprite sprite;
-
         public Herbizarre(ContentManager content, GraphicsDevice device, AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed) : 
             base (sex, visionZoneRadius, contactZoneRadius, speed)
         {
-            this.sprite = new Sprite(content, device, timePerFrame, widthFrame, heightFrame);
+            this.Sprite = new Sprite(content, device, timePerFrame, widthFrame, heightFrame);
         }
 
-        public Sprite Sprite
+        public static int TimePerFrame
         {
-            get { return sprite; }
+            get { return timePerFrame; }
         }
 
-        public void Load()
+        public static int WidthFrame
         {
-            sprite.Load();
+            get { return widthFrame; }
+        }
 
-            sprite.AddTexture("Pictures/herbizarre_0");
-            sprite.AddTexture("Pictures/herbizarre_1");
-            sprite.AddTexture("Pictures/herbizarre_2");
+        public static int HeightFrame
+        {
+            get { return heightFrame; }
+        }
+
+        public override void Load()
+        {
+            Sprite.AddTexture("Pictures/herbizarre_0");
+            Sprite.AddTexture("Pictures/herbizarre_1");
+            Sprite.AddTexture("Pictures/herbizarre_2");
+
+            base.Load();
         }
     }
 }

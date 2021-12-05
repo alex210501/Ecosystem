@@ -22,9 +22,10 @@ namespace Ecosystem
         private float hunger = 0;
         private float reproductionDesire = 0;
         private bool isAlive = true;
+        private Sprite sprite = null;
         
         public LifeForm() { }
-
+        
         public float Health
         {
             get { return health; }
@@ -80,6 +81,12 @@ namespace Ecosystem
             set { isAlive = value; }
         }
 
+        public Sprite Sprite
+        {
+            get { return sprite; }
+            protected set { sprite = value; }
+        }
+
         public bool IsHungry()
         {
             return (Hunger >= hungerThreshold);
@@ -93,6 +100,11 @@ namespace Ecosystem
 
             Energy += healthToGive;
             Health -= healthToGive;
+        }
+
+        public virtual void Load()
+        {
+            sprite.Load();
         }
     }
 }
