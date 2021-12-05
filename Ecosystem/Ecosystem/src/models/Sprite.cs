@@ -72,7 +72,6 @@ namespace Ecosystem
 
         public void AddTexture(string texturePath)
         {
-            Console.WriteLine("here");
             frame.Add(content.Load<Texture2D>(texturePath));
             totalFrame++;
         }

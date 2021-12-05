@@ -8,14 +8,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Ecosystem
 {
-    public class Groudon : Herbivore
+    public class Groudon : Carnivore
     {
-        private static int timePerFrame = 200;
+        private static int timePerFrame = 300;
         private static int widthFrame = 60;
         private static int heightFrame = 60;
 
-        public Groudon(ContentManager content, GraphicsDevice device, AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed) :
-            base(sex, visionZoneRadius, contactZoneRadius, speed)
+        public Groudon(ContentManager content, GraphicsDevice device, AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed, float damage) :
+            base(sex, visionZoneRadius, contactZoneRadius, speed, damage)
         {
             this.Sprite = new Sprite(content, device, timePerFrame, widthFrame, heightFrame);
         }

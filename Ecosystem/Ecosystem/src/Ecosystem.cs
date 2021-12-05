@@ -1,33 +1,27 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Ecosystem
 {
-    public class Ecosystem : Game
+    public class Ecosystem : EcosystemFunction
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
-
-        public Ecosystem()
-        {
-            _graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-            IsMouseVisible = true;
-        }
+        public Ecosystem() : base() { }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            GenerateLife(10, 10, 0);
 
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            foreach (LifeForm lifeForm in LifeFormList)
+                lifeForm.Load();
         }
 
         protected override void Update(GameTime gameTime)
@@ -35,7 +29,11 @@ namespace Ecosystem
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            foreach (LifeForm lifeForm in LifeFormList)
+            {
+                // Console.WriteLine(lifeForm.Sprite.PositionX);
+                lifeForm.Sprite.Update(gameTime);
+            }
 
             base.Update(gameTime);
         }
@@ -44,7 +42,8 @@ namespace Ecosystem
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            foreach (LifeForm lifeForm in LifeFormList)
+                lifeForm.Sprite.Draw(gameTime);
 
             base.Draw(gameTime);
         }
