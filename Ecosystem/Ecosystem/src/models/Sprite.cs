@@ -24,7 +24,7 @@ namespace Ecosystem
         private float scale = 1;
         private List<Texture2D> frame;
 
-        public Sprite(ContentManager content,GraphicsDevice device, float timePerFrame, int frameWidth, int frameHeight)
+        public Sprite(ContentManager content, GraphicsDevice device, float timePerFrame, int frameWidth, int frameHeight)
         {
             this.content = content;
             this.device = device;

@@ -11,6 +11,12 @@ namespace Ecosystem
 
         protected override void Initialize()
         {
+            // Change the screen size
+            Graphics.PreferredBackBufferWidth = ScreenWidth;
+            Graphics.PreferredBackBufferHeight = ScreenHeight;
+            Graphics.IsFullScreen = false;
+            Graphics.ApplyChanges();
+
             GenerateLife(10, 10, 0);
 
             base.Initialize();
