@@ -153,5 +153,21 @@ namespace Ecosystem
      
             return (Math.Pow(visionZoneRadius, 2) >= (Math.Pow(Sprite.PositionX - lifeForm.Sprite.PositionX, 2) + Math.Pow(Sprite.PositionY - lifeForm.Sprite.PositionY, 2)));
         }
+
+        public bool IsInContactZone(LifeForm lifeForm)
+        {
+            // If it's itself, return false
+            if (lifeForm == this)
+                return false;
+
+            // First, check if the Lifeform is not to far away
+            if ((lifeForm.Sprite.LeftEdge > (Sprite.RightEdge + contactZoneRadius)) || (lifeForm.Sprite.RightEdge < (Sprite.LeftEdge - contactZoneRadius)))
+                return false;
+
+            if ((lifeForm.Sprite.TopEdge > (Sprite.BottompEdge + contactZoneRadius)) || (lifeForm.Sprite.BottompEdge < (Sprite.TopEdge - contactZoneRadius)))
+                return false;
+
+            return (Math.Pow(contactZoneRadius, 2) >= (Math.Pow(Sprite.PositionX - lifeForm.Sprite.PositionX, 2) + Math.Pow(Sprite.PositionY - lifeForm.Sprite.PositionY, 2)));
+        }
     }
 }
