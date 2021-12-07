@@ -65,6 +65,26 @@ namespace Ecosystem
             set { scale = value; }
         }
 
+        public int LeftEdge
+        {
+            get { return (PositionX - rameWidth); }
+        }
+
+        public int RightEdge
+        {
+            get { return (PositionX - rameWidth); }
+        }
+
+        public int TopEdge
+        {
+            get { return (PositionY - frameHeight); }
+        }
+
+        public int BottompEdge
+        {
+            get { return (PositionY + frameHeight); }
+        }
+
         public void Load()
         {
             spriteBatch = new SpriteBatch(this.device);
