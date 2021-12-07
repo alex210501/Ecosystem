@@ -79,6 +79,18 @@ namespace Ecosystem
 
                 lifeFormList.Add(herbivore);
             }
+
+            for (int i = 0; i < plantsNumber; i++)
+            {
+                Plants plant = new SunPlant(Content, GraphicsDevice, 100, 50);
+
+                // Place the herbivore in the screen randomly
+                plant.Sprite.PositionX = rnd.Next(plant.Sprite.FrameWidth, graphics.PreferredBackBufferWidth - plant.Sprite.FrameWidth);
+                plant.Sprite.PositionY = rnd.Next(plant.Sprite.FrameHeight, graphics.PreferredBackBufferHeight - plant.Sprite.FrameHeight);
+                plant.Sprite.Scale = 0.7f;
+
+                lifeFormList.Add(plant);
+            }
         }
     }
 }
