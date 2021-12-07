@@ -137,5 +137,21 @@ namespace Ecosystem
         {
             return (poopDesire >= poopThreshold);
         }
+
+        public bool IsInVisionZone(LifeForm lifeForm)
+        {
+            // If it's itself, return false
+            if (lifeForm == this)
+                return false;
+
+            // First, check if the Lifeform is not to far away
+            if ((lifeForm.Sprite.LeftEdge > (Sprite.RightEdge + visionZoneRadius)) || (lifeForm.Sprite.RightEdge < (Sprite.LeftEdge - visionZoneRadius)))
+                return false;
+
+            if ((lifeForm.Sprite.TopEdge > ( Sprite.BottompEdge + visionZoneRadius)) || (lifeForm.Sprite.BottompEdge < (Sprite.TopEdge - visionZoneRadius)))
+                return false;
+     
+            return (Math.Pow(visionZoneRadius, 2) >= (Math.Pow(Sprite.PositionX - lifeForm.Sprite.PositionX, 2) + Math.Pow(Sprite.PositionY - lifeForm.Sprite.PositionY, 2)));
+        }
     }
 }

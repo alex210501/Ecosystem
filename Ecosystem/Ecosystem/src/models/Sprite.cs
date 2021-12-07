@@ -67,12 +67,12 @@ namespace Ecosystem
 
         public int LeftEdge
         {
-            get { return (PositionX - rameWidth); }
+            get { return (PositionX - frameWidth); }
         }
 
         public int RightEdge
         {
-            get { return (PositionX - rameWidth); }
+            get { return (PositionX - frameWidth); }
         }
 
         public int TopEdge
