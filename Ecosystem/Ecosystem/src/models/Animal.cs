@@ -11,7 +11,6 @@ namespace Ecosystem
         Female
     }
 
-    // TODO: Think for IsInVisionZone(), IsInContactZone(), Walk()
     public abstract class Animal : LifeForm
     {
         private static readonly float poopThreshold = 70;
@@ -101,6 +100,18 @@ namespace Ecosystem
             set { pregnancyTime = value; }
         }
 
+        public float DestinationX
+        {
+            get { return destination.X; }
+            set { destination.X = value; }
+        }
+
+        public float DestinationY
+        {
+            get { return destination.Y; }
+            set { destination.Y = value; }
+        }
+
         public void Reproduction(Animal animal)
         {
             if (Sex != animal.Sex)
@@ -159,6 +170,11 @@ namespace Ecosystem
                 Sprite.PositionY -= (int)(0.01 * Speed);
             else if (Sprite.PositionY < y)
                 Sprite.PositionY += (int)(0.01 * Speed);
+        }
+
+        public bool IsDestinationReached()
+        {
+            return ((Sprite.PositionX == destination.X) && (Sprite.PositionY == destination.Y));
         }
 
         public bool IsInVisionZone(LifeForm lifeForm)

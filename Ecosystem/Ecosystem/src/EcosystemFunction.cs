@@ -99,14 +99,15 @@ namespace Ecosystem
 
         public void WalkRandom(Animal animal)
         {
+            if (animal.IsDestinationReached())
+            {
+                Random rnd = new Random();
 
-            Random x = new Random();
-            Random y = new Random();
+                animal.DestinationX = rnd.Next(0, ScreenWidth);
+                animal.DestinationY = rnd.Next(0, ScreenHeight );
+            }
 
-            int x_destination = x.Next(0, ScreenWidth);
-            int y_destination = y.Next(0, ScreenHeight);
-
-            animal.WalkTo(x_destination, y_destination);
+            animal.Walk();
         }
     }
 }

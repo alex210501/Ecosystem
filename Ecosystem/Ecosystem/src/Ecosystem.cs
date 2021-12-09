@@ -42,7 +42,7 @@ namespace Ecosystem
                 lifeForm.Sprite.Update(gameTime);
 
                 if (lifeForm is Animal)
-                    (lifeForm as Animal).Walk();
+                    WalkRandom(lifeForm as Animal);
             }
 
             base.Update(gameTime);
