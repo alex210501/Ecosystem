@@ -14,8 +14,8 @@ namespace Ecosystem
         private static int widthFrame = 60;
         private static int heightFrame = 60;
 
-        public Groudon(ContentManager content, GraphicsDevice device, AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed, float damage) :
-            base(sex, visionZoneRadius, contactZoneRadius, speed, damage)
+        public Groudon(ContentManager content, GraphicsDevice device, AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed, float damage, Vector2 destination) :
+            base(sex, visionZoneRadius, contactZoneRadius, speed, damage, destination)
         {
             this.Sprite = new Sprite(content, device, timePerFrame, widthFrame, heightFrame);
         }

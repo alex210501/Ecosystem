@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Ecosystem
 {
@@ -26,14 +27,16 @@ namespace Ecosystem
         private float poopDesire = 0;
         private int numberChild = 0;
         private float pregnancyTime = 0;
+        private Vector2 destination;
 
-        protected Animal(AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed) :
+        protected Animal(AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed, Vector2 destination) :
             base()
         {
             this.sex = sex;
             this.visionZoneRadius = visionZoneRadius;
             this.contactZoneRadius = contactZoneRadius;
             this.speed = speed;
+            this.destination = destination;
         }
 
         public AnimalSex Sex
@@ -136,6 +139,26 @@ namespace Ecosystem
         public bool WantPoop()
         {
             return (poopDesire >= poopThreshold);
+        }
+        
+        public void Walk()
+        {
+            WalkTo(destination.X, destination.Y);
+        }
+
+        public void WalkTo(float x , float y)
+        {
+            // Move X
+            if (Sprite.PositionX > x)
+                Sprite.PositionX -= (int)(0.01 * Speed);
+            else if (Sprite.PositionX < x)
+                Sprite.PositionX += (int)(0.01 * Speed);
+
+            // Move Y
+            if (Sprite.PositionY > y)
+                Sprite.PositionY -= (int)(0.01 * Speed);
+            else if (Sprite.PositionY < y)
+                Sprite.PositionY += (int)(0.01 * Speed);
         }
 
         public bool IsInVisionZone(LifeForm lifeForm)
