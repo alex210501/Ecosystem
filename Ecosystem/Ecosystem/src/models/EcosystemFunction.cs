@@ -57,7 +57,9 @@ namespace Ecosystem
             for (int i = 0; i < carnivoresNumber; i++)
             {
                 AnimalSex sex = (AnimalSex)rnd.Next(0, 1);
-                Carnivore carnivore = new Groudon(Content, GraphicsDevice, sex, 100, 50, 100f, 20f);
+                Vector2 destination = new Vector2(rnd.Next(0, ScreenWidth), rnd.Next(0, ScreenHeight));
+
+                Carnivore carnivore = new Groudon(Content, GraphicsDevice, sex, 100, 50, 100f, 20f, destination);
 
                 // Place the carnivores in the screen randomly
                 carnivore.Sprite.PositionX = rnd.Next(carnivore.Sprite.FrameWidth, graphics.PreferredBackBufferWidth - carnivore.Sprite.FrameWidth);
@@ -70,7 +72,9 @@ namespace Ecosystem
             for (int i = 0; i < herbivoresNumber; i++)
             {
                 AnimalSex sex = (AnimalSex)rnd.Next(0, 1);
-                Herbivore herbivore= new Herbizarre(Content, GraphicsDevice, sex, 100, 50, 100f);
+                Vector2 destination = new Vector2(rnd.Next(0, ScreenWidth), rnd.Next(0, ScreenHeight));
+
+                Herbivore herbivore= new Herbizarre(Content, GraphicsDevice, sex, 100, 50, 100f, destination);
 
                 // Place the herbivore in the screen randomly
                 herbivore.Sprite.PositionX = rnd.Next(herbivore.Sprite.FrameWidth, graphics.PreferredBackBufferWidth - herbivore.Sprite.FrameWidth);
@@ -79,6 +83,18 @@ namespace Ecosystem
 
                 lifeFormList.Add(herbivore);
             }
+        }
+
+        public void WalkRandom(Animal animal)
+        {
+
+            Random x = new Random();
+            Random y = new Random();
+
+            int x_destination = x.Next(0, ScreenWidth);
+            int y_destination = y.Next(0, ScreenHeight);
+
+            animal.WalkTo(x_destination, y_destination);
         }
     }
 }

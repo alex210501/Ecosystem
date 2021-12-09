@@ -37,8 +37,12 @@ namespace Ecosystem
 
             foreach (LifeForm lifeForm in LifeFormList)
             {
-                // Console.WriteLine(lifeForm.Sprite.PositionX);
+                // Console.WriteLine(lifeForm.Sprite.PositionX
+
                 lifeForm.Sprite.Update(gameTime);
+
+                if (lifeForm is Animal)
+                    (lifeForm as Animal).Walk();
             }
 
             base.Update(gameTime);

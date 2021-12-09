@@ -14,8 +14,8 @@ namespace Ecosystem
         private static int widthFrame = 40;
         private static int heightFrame = 30;
 
-        public Herbizarre(ContentManager content, GraphicsDevice device, AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed) : 
-            base (sex, visionZoneRadius, contactZoneRadius, speed)
+        public Herbizarre(ContentManager content, GraphicsDevice device, AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed, Vector2 destination) : 
+            base (sex, visionZoneRadius, contactZoneRadius, speed, destination)
         {
             this.Sprite = new Sprite(content, device, timePerFrame, widthFrame, heightFrame);
         }
