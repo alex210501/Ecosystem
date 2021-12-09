@@ -109,5 +109,18 @@ namespace Ecosystem
 
             animal.Walk();
         }
+        
+        public void Run(GameTime gameTime)
+        {
+            foreach (LifeForm lifeForm in LifeFormList)
+            {
+                // Console.WriteLine(lifeForm.Sprite.PositionX
+
+                lifeForm.Sprite.Update(gameTime);
+
+                if (lifeForm is Animal)
+                    WalkRandom(lifeForm as Animal);
+            }
+        }
     }
 }

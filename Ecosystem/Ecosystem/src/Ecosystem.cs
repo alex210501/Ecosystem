@@ -35,15 +35,7 @@ namespace Ecosystem
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            foreach (LifeForm lifeForm in LifeFormList)
-            {
-                // Console.WriteLine(lifeForm.Sprite.PositionX
-
-                lifeForm.Sprite.Update(gameTime);
-
-                if (lifeForm is Animal)
-                    WalkRandom(lifeForm as Animal);
-            }
+            Run(gameTime);
 
             base.Update(gameTime);
         }
