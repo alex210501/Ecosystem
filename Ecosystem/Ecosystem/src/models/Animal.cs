@@ -214,6 +214,7 @@ namespace Ecosystem
         {
             float timeElapsed = (gameTime.ElapsedGameTime.Milliseconds / 1000);
 
+            pregnancyTime += timeElapsed;
             PoopDesire += (poopDesirePerSecond * timeElapsed);
             base.Routine(gameTime);
         }
