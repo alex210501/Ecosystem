@@ -17,6 +17,7 @@ namespace Ecosystem
         private int maximumChild = 12;
         private int minimumChild = 0;
         private int maximumPregnancyTime = 0;
+        protected static readonly float poopDesirePerSecond = 10;
 
         private readonly AnimalSex sex;
         private int visionZoneRadius;
@@ -207,6 +208,14 @@ namespace Ecosystem
                 return false;
 
             return (Math.Pow(contactZoneRadius, 2) >= (Math.Pow(Sprite.PositionX - lifeForm.Sprite.PositionX, 2) + Math.Pow(Sprite.PositionY - lifeForm.Sprite.PositionY, 2)));
+        }
+
+        public override void Routine(GameTime gameTime)
+        {
+            float timeElapsed = (gameTime.ElapsedGameTime.Milliseconds / 1000);
+
+            PoopDesire += (poopDesirePerSecond * timeElapsed);
+            base.Routine(gameTime);
         }
     }
 }

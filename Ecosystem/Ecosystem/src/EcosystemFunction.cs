@@ -127,7 +127,7 @@ namespace Ecosystem
                 }
                 // Console.WriteLine(lifeForm.Sprite.PositionX1
 
-                lifeForm.Sprite.Update(gameTime);
+                lifeForm.Routine(gameTime);
 
                 //if (lifeForm is Animal)
                     //WalkRandom(lifeForm as Animal);

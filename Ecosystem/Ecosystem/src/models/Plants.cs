@@ -14,8 +14,8 @@ namespace Ecosystem
          *When a plant dies she becomes something (poop isn't a good choise) maybe Carbon or coil or whatever just
          *a thing usefull for the other plants
         */
-        private float eatingEnergy = 0;
-        private float satiationPoint = 0;
+        private float eatingEnergy = 100;
+        private float satiationPoint = 100;
 
         public Plants(int RootZoneRadius, int SeedingZoneRadius) : base()
         {

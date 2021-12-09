@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 
 namespace Ecosystem
@@ -12,10 +13,14 @@ namespace Ecosystem
     {
         protected static readonly float maxHealth = 100;
         protected static readonly float maxEnergy = 100;
+        protected static readonly float maxHunger = 100;
         protected static readonly float maxReproductionDesire = 100;
-        protected static readonly float healthToGivePerSecond = 2; // Life to give per second, when we convert life to energy
+        protected static readonly float healthToGive = 20; // Life to give, when we convert life to energy
         protected static readonly float reproductionDesireThreshold = 70;
         protected static readonly float hungerThreshold = 70;
+        protected static readonly float reproductionDesirePerSecond = 10;
+        protected static readonly float hungerPerSecond = 10;
+        protected static readonly float energyPerSecond = 10;
 
         private float health = 100;
         private float energy = 100;
@@ -31,7 +36,7 @@ namespace Ecosystem
             get { return health; }
             set
             {
-                health += value;
+                health = value;
 
                 if (health > maxHealth) health = maxHealth;
 
@@ -48,7 +53,7 @@ namespace Ecosystem
             get { return energy; }
             set
             {
-                energy += energy;
+                energy = value;
 
                 if (energy > maxEnergy) energy = maxEnergy;
 
@@ -59,7 +64,14 @@ namespace Ecosystem
         public float Hunger
         {
             get { return hunger; }
-            protected set { hunger = value; }
+            protected set 
+            {
+                hunger = value;
+
+                if (hunger > maxHunger) hunger = maxHunger;
+
+                if (hunger < 0) hunger = 0; 
+            }
         }
 
         public float ReproductionDesire
@@ -67,7 +79,7 @@ namespace Ecosystem
             get { return reproductionDesire; }
             set
             {
-                reproductionDesire += value;
+                reproductionDesire = value;
 
                 if (reproductionDesire > maxReproductionDesire) reproductionDesire = maxReproductionDesire;
 
@@ -95,10 +107,8 @@ namespace Ecosystem
         public abstract bool CanEat(IEatable food);
         public abstract void Eat(IEatable food);
 
-        void LifeToEnergy(float timeElapsed)
+        void LifeToEnergy()
         {
-            float healthToGive = healthToGivePerSecond * timeElapsed;
-
             Energy += healthToGive;
             Health -= healthToGive;
         }
@@ -106,6 +116,22 @@ namespace Ecosystem
         public virtual void Load()
         {
             sprite.Load();
+        }
+
+        public virtual void Routine(GameTime gameTime)
+        {
+            float timeElapsed = ((float)gameTime.ElapsedGameTime.Milliseconds / 1000);
+
+            // Time management of different parameters of a LifeForm
+            Energy -= (energyPerSecond * timeElapsed);
+            ReproductionDesire += (reproductionDesirePerSecond * timeElapsed);
+            Hunger -= (hungerPerSecond * timeElapsed);
+
+            // If there's no more energy, we convert the healt into energy
+            if (energy == 0)
+                LifeToEnergy();
+
+            Sprite.Update(gameTime);
         }
     }
 }
