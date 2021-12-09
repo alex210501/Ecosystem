@@ -30,7 +30,7 @@ namespace Ecosystem
             }
         }
 
-        public bool CanEat(IEatable food)
+        public override bool CanEat(IEatable food)
         {
             return (food is Meat);
         }

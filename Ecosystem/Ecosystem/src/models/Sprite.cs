@@ -19,8 +19,8 @@ namespace Ecosystem
         private int currentFrame = 0;
         private int frameWidth = 100;
         private int frameHeight = 100;
-        private int positionX = 0;
-        private int positionY = 0;
+        private float positionX = 0;
+        private float positionY = 0;
         private float scale = 1;
         private List<Texture2D> frame;
 
@@ -47,13 +47,13 @@ namespace Ecosystem
             protected set { frameHeight = value; }
         }
 
-        public int PositionX
+        public float PositionX
         {
             get { return positionX + (frameWidth / 2); }
             set { positionX = value - (frameWidth / 2); }
         }
 
-        public int PositionY
+        public float PositionY
         {
             get { return positionY + (frameHeight / 2); }
             set { positionY = value - (frameHeight / 2); }
@@ -67,22 +67,22 @@ namespace Ecosystem
 
         public int LeftEdge
         {
-            get { return (PositionX - frameWidth); }
+            get { return (int)(PositionX - frameWidth); }
         }
 
         public int RightEdge
         {
-            get { return (PositionX - frameWidth); }
+            get { return (int)(PositionX - frameWidth); }
         }
 
         public int TopEdge
         {
-            get { return (PositionY - frameHeight); }
+            get { return (int)(PositionY - frameHeight); }
         }
 
         public int BottompEdge
         {
-            get { return (PositionY + frameHeight); }
+            get { return (int)(PositionY + frameHeight); }
         }
 
         public void Load()
@@ -111,7 +111,7 @@ namespace Ecosystem
         {
             if (totalFrame > 0)
             {
-                Rectangle destination = new Rectangle(positionX, positionY, (int)(frameWidth * scale), (int)(frameHeight * scale));
+                Rectangle destination = new Rectangle((int)positionX, (int)positionY, (int)(frameWidth * scale), (int)(frameHeight * scale));
                 Rectangle source = new Rectangle(0, 0, frame[currentFrame].Width, frame[currentFrame].Height);
 
                 spriteBatch.Begin();

@@ -161,15 +161,15 @@ namespace Ecosystem
         {
             // Move X
             if (Sprite.PositionX > x)
-                Sprite.PositionX -= (int)(0.01 * Speed);
+                Sprite.PositionX -= (float)(0.01 * Speed);
             else if (Sprite.PositionX < x)
-                Sprite.PositionX += (int)(0.01 * Speed);
+                Sprite.PositionX += (float)(0.01 * Speed);
 
             // Move Y
             if (Sprite.PositionY > y)
-                Sprite.PositionY -= (int)(0.01 * Speed);
+                Sprite.PositionY -= (float)(0.01 * Speed);
             else if (Sprite.PositionY < y)
-                Sprite.PositionY += (int)(0.01 * Speed);
+                Sprite.PositionY += (float)(0.01 * Speed);
         }
 
         public bool IsDestinationReached()

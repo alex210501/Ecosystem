@@ -92,6 +92,7 @@ namespace Ecosystem
             return (Hunger >= hungerThreshold);
         }
 
+        public abstract bool CanEat(IEatable food);
         public abstract void Eat(IEatable food);
 
         void LifeToEnergy(float timeElapsed)

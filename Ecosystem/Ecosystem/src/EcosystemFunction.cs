@@ -59,7 +59,7 @@ namespace Ecosystem
                 AnimalSex sex = (AnimalSex)rnd.Next(0, 1);
                 Vector2 destination = new Vector2(rnd.Next(0, ScreenWidth), rnd.Next(0, ScreenHeight));
 
-                Carnivore carnivore = new Groudon(Content, GraphicsDevice, sex, 100, 50, 100f, 20f, destination);
+                Carnivore carnivore = new Groudon(Content, GraphicsDevice, sex, 100, 50, 50f, 20f, destination);
 
                 // Place the carnivores in the screen randomly
                 carnivore.Sprite.PositionX = rnd.Next(carnivore.Sprite.FrameWidth, graphics.PreferredBackBufferWidth - carnivore.Sprite.FrameWidth);
@@ -74,7 +74,7 @@ namespace Ecosystem
                 AnimalSex sex = (AnimalSex)rnd.Next(0, 1);
                 Vector2 destination = new Vector2(rnd.Next(0, ScreenWidth), rnd.Next(0, ScreenHeight));
 
-                Herbivore herbivore= new Herbizarre(Content, GraphicsDevice, sex, 100, 50, 100f, destination);
+                Herbivore herbivore= new Herbizarre(Content, GraphicsDevice, sex, 100, 30, 30f, destination);
 
                 // Place the herbivore in the screen randomly
                 herbivore.Sprite.PositionX = rnd.Next(herbivore.Sprite.FrameWidth, graphics.PreferredBackBufferWidth - herbivore.Sprite.FrameWidth);
@@ -112,15 +112,49 @@ namespace Ecosystem
         
         public void Run(GameTime gameTime)
         {
+            LifeFormList.RemoveAll(life => life.IsAlive == false);
+
             foreach (LifeForm lifeForm in LifeFormList)
             {
-                // Console.WriteLine(lifeForm.Sprite.PositionX
+
+                if (lifeForm is Animal)
+                {
+                    Animal animal = (lifeForm as Animal);
+                    List<LifeForm> visionList = new List<LifeForm>(lifeFormList.FindAll(animal.IsInVisionZone));
+                    if (animal is Herbivore)
+                        RunHerbivore(visionList, animal as Herbivore);
+                    animal.Walk();
+                }
+                // Console.WriteLine(lifeForm.Sprite.PositionX1
 
                 lifeForm.Sprite.Update(gameTime);
 
-                if (lifeForm is Animal)
-                    WalkRandom(lifeForm as Animal);
+                //if (lifeForm is Animal)
+                    //WalkRandom(lifeForm as Animal);
             }
         }
+
+        public void RunHerbivore(List<LifeForm> visionList, Herbivore herbi)
+        {
+            List<LifeForm> PlantsInVision = new List<LifeForm>(visionList.FindAll(delegate(LifeForm visionLife) { return visionLife is Plants; }));
+            List<LifeForm> PlantsInContact = new List<LifeForm>(PlantsInVision.FindAll(herbi.IsInContactZone));
+
+            if (PlantsInVision.Count == 0)
+                return;
+
+            if (PlantsInContact.Count != 0)
+            {
+                herbi.Eat(PlantsInContact[0] as Plants);
+                PlantsInContact[0].IsAlive = false;
+                return;
+            }
+            else
+            {
+                    herbi.DestinationX = PlantsInVision[0].Sprite.PositionX;
+                    herbi.DestinationY = PlantsInVision[0].Sprite.PositionY;
+            }
+
+        }
+
     }
 }
