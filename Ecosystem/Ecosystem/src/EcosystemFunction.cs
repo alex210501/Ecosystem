@@ -124,7 +124,8 @@ namespace Ecosystem
         
         public void Run(GameTime gameTime)
         {
-            entities.RemoveAll(life => (life as LifeForm).IsAlive == false);
+            // entities.RemoveAll(life => (life as LifeForm).IsAlive == false);
+            CheckEntityDeath();
 
             /*
             foreach (LifeForm lifeForm in LifeFormList)
@@ -230,6 +231,34 @@ namespace Ecosystem
                 carnivore.DestinationX = attackList[0].Sprite.PositionX;
                 carnivore.DestinationY = attackList[0].Sprite.PositionY;
             }
+        }
+
+        void CheckEntityDeath()
+        {
+            List<Entity> entityToRemove = new List<Entity>();
+            List<Entity> entityToAdd = new List<Entity>();
+
+            foreach (Entity entity in entities)
+            {
+                // Transform a death Animal into meat
+                if ((entity is LifeForm) && ((entity as LifeForm).IsAlive == false))
+                {
+                    if (entity is Animal)
+                    {
+                        Meat meat = new Meat(Content, GraphicsDevice, 100, 100);
+
+                        meat.Sprite.PositionX = 10; // entity.Sprite.PositionX;
+                        meat.Sprite.PositionY = 10; // entity.Sprite.PositionY;
+                        entityToAdd.Add(meat);
+                    }
+
+                    entityToRemove.Add(entity);
+                }
+            }
+
+            foreach (Entity entity in entityToRemove)
+                entities.Remove(entity);
+            entities.AddRange(entityToAdd);
         }
     }
 }
