@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 namespace Ecosystem
 {
     // TODO: Update the diagram for constant variable
-    public abstract class LifeForm
+    public abstract class LifeForm : Entity
     {
         protected static readonly float maxHealth = 100;
         protected static readonly float maxEnergy = 100;
@@ -27,9 +27,8 @@ namespace Ecosystem
         private float hunger = 0;
         private float reproductionDesire = 0;
         private bool isAlive = true;
-        private Sprite sprite = null;
         
-        public LifeForm() { }
+        public LifeForm() : base() { }
         
         public float Health
         {
@@ -93,12 +92,6 @@ namespace Ecosystem
             set { isAlive = value; }
         }
 
-        public Sprite Sprite
-        {
-            get { return sprite; }
-            protected set { sprite = value; }
-        }
-
         public bool IsHungry()
         {
             return (Hunger >= hungerThreshold);
@@ -111,11 +104,6 @@ namespace Ecosystem
         {
             Energy += healthToGive;
             Health -= healthToGive;
-        }
-
-        public virtual void Load()
-        {
-            sprite.Load();
         }
 
         public virtual void Routine(GameTime gameTime)

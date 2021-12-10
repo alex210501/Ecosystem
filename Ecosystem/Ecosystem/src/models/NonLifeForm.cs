@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Ecosystem
 {
-    public abstract class NonLifeForm
+    public abstract class NonLifeForm : Entity
     {
-        public NonLifeForm() { }
+        public NonLifeForm() : base() { }
     }
 }
