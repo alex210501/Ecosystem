@@ -68,7 +68,7 @@ namespace Ecosystem
                 AnimalSex sex = (AnimalSex)rnd.Next(0, 1);
                 Vector2 destination = new Vector2(rnd.Next(0, ScreenWidth), rnd.Next(0, ScreenHeight));
 
-                Carnivore carnivore = new Groudon(Content, GraphicsDevice, sex, 100, 50, 50f, 20f, destination);
+                Carnivore carnivore = new Groudon(Content, GraphicsDevice, sex, 100, 40, 50f, 20f, destination);
 
                 // Place the carnivores in the screen randomly
                 carnivore.Sprite.PositionX = rnd.Next(carnivore.Sprite.FrameWidth, graphics.PreferredBackBufferWidth - carnivore.Sprite.FrameWidth);
@@ -196,19 +196,39 @@ namespace Ecosystem
             List<Entity> eatableInVision = new List<Entity>(visionList.FindAll(delegate (Entity visionLife) { return lifeForm.CanEat(visionLife as IEatable); }));
             List<Entity> eatableInContact = new List<Entity>(eatableInVision.FindAll(lifeForm.IsInContactZone));
 
-            if (eatableInVision.Count == 0)
-                return;
-
             if (eatableInContact.Count != 0)
             {
                 lifeForm.Eat(eatableInContact[0] as IEatable);
                 (eatableInContact[0] as LifeForm).IsAlive = false;
                 return;
             }
-            else
+            else if (eatableInVision.Count != 0)
             {
                 (lifeForm as Animal).DestinationX = eatableInVision[0].Sprite.PositionX;
                 (lifeForm as Animal).DestinationY = eatableInVision[0].Sprite.PositionY;
+                return;
+            }
+
+            if (lifeForm is Carnivore)
+                Attack(lifeForm as Carnivore, visionList);
+        }
+
+        void Attack(Carnivore carnivore, List<Entity> visionList)
+        {
+            // Get all the Animal that the carnivore can attack
+            List<Entity> attackList = new List<Entity>(visionList.FindAll(delegate (Entity entity) { if (entity is Animal) return carnivore.CanAttack(entity as Animal); else return false; }));
+            List<Entity> attackContactList = new List<Entity>(attackList.FindAll(carnivore.IsInContactZone));
+
+            if (attackList.Count == 0)
+                return;
+
+            // Check if the carnivora can directly attack, or run after its prey
+            if (attackContactList.Count != 0)
+                carnivore.Attack(attackContactList[0] as Animal);
+            else
+            {
+                carnivore.DestinationX = attackList[0].Sprite.PositionX;
+                carnivore.DestinationY = attackList[0].Sprite.PositionY;
             }
         }
     }
