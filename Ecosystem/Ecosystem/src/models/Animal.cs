@@ -80,7 +80,7 @@ namespace Ecosystem
 
         public float Speed
         {
-            get { return (speed * (Health / 100) * (Energy / 100)); }
+            get { return (speed * (Energy / 100)); }
         }
 
         public float PoopDesire

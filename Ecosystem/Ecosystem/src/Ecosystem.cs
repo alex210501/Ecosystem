@@ -26,8 +26,8 @@ namespace Ecosystem
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            foreach (LifeForm lifeForm in LifeFormList)
-                lifeForm.Load();
+            foreach (Entity entity in Entities)
+                entity.Load();
         }
 
         protected override void Update(GameTime gameTime)
@@ -44,8 +44,8 @@ namespace Ecosystem
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            foreach (LifeForm lifeForm in LifeFormList)
-                lifeForm.Sprite.Draw(gameTime);
+            foreach (Entity entity in Entities)
+                entity.Sprite.Draw(gameTime);
 
             base.Draw(gameTime);
         }
