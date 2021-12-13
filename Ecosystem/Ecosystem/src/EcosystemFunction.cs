@@ -156,11 +156,12 @@ namespace Ecosystem
                     if (lifeForm is Animal)
                     {
                         Animal animal = (entity as Animal);
-                        List<Entity> visionList = new List<Entity>(lifeFormList.FindAll(animal.IsInVisionZone));
+                        List<Entity> visionList = new List<Entity>(entities.FindAll(animal.IsInVisionZone));
 
                         Eat(visionList, animal);
                         animal.Walk();
                     }
+
                     // Console.WriteLine(lifeForm.Sprite.PositionX1
 
                     lifeForm.Routine(gameTime);
@@ -200,17 +201,18 @@ namespace Ecosystem
             if (eatableInContact.Count != 0)
             {
                 lifeForm.Eat(eatableInContact[0] as IEatable);
-                (eatableInContact[0] as LifeForm).IsAlive = false;
-                return;
+
+                if (eatableInContact[0] is LifeForm)
+                    (eatableInContact[0] as LifeForm).IsAlive = false;
+                else
+                    (eatableInContact[0] as NonLifeForm).StillExists = false;
             }
             else if (eatableInVision.Count != 0)
             {
                 (lifeForm as Animal).DestinationX = eatableInVision[0].Sprite.PositionX;
                 (lifeForm as Animal).DestinationY = eatableInVision[0].Sprite.PositionY;
-                return;
             }
-
-            if (lifeForm is Carnivore)
+            else if (lifeForm is Carnivore)
                 Attack(lifeForm as Carnivore, visionList);
         }
 
@@ -244,21 +246,41 @@ namespace Ecosystem
                 if ((entity is LifeForm) && ((entity as LifeForm).IsAlive == false))
                 {
                     if (entity is Animal)
-                    {
-                        Meat meat = new Meat(Content, GraphicsDevice, 100, 100);
-
-                        meat.Sprite.PositionX = 10; // entity.Sprite.PositionX;
-                        meat.Sprite.PositionY = 10; // entity.Sprite.PositionY;
-                        entityToAdd.Add(meat);
-                    }
-
+                        entityToAdd.Add(AnimalToMeat(entity as Animal));
                     entityToRemove.Add(entity);
                 }
+                // Delete the meat which has been eat
+                else if ((entity is NonLifeForm) && ((entity as NonLifeForm).StillExists == false))
+                    entityToRemove.Add(entity);
             }
 
             foreach (Entity entity in entityToRemove)
                 entities.Remove(entity);
             entities.AddRange(entityToAdd);
+
+            /*foreach (Entity entity in entities)
+            {
+                if (entity is Groudon)
+                {
+                    foreach (Entity eatable in entities)
+                    {
+                        if (eatable is Meat)
+                            Console.WriteLine((entity as Groudon).CanEat(eatable as IEatable));
+                    }
+                }
+            }*/
+        }
+
+        public Meat AnimalToMeat(Animal animal)
+        {
+            Meat meat = new Meat(Content, GraphicsDevice, 100, 100);
+
+            // Gave the position of the Animal to the Meat
+            meat.Sprite.PositionX = animal.Sprite.PositionX;
+            meat.Sprite.PositionY = animal.Sprite.PositionY;
+            meat.Load();
+
+            return meat;
         }
     }
 }
