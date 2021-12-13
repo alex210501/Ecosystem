@@ -80,7 +80,7 @@ namespace Ecosystem
 
         public float Speed
         {
-            get { return (speed * (Health / 100) * (Energy / 100)); }
+            get { return (speed * (Energy / 100)); }
         }
 
         public float PoopDesire
@@ -178,7 +178,7 @@ namespace Ecosystem
             return ((Sprite.PositionX == destination.X) && (Sprite.PositionY == destination.Y));
         }
 
-        public bool IsInVisionZone(LifeForm lifeForm)
+        public bool IsInVisionZone(Entity lifeForm)
         {
             // If it's itself, return false
             if (lifeForm == this)
@@ -194,7 +194,7 @@ namespace Ecosystem
             return (Math.Pow(visionZoneRadius, 2) >= (Math.Pow(Sprite.PositionX - lifeForm.Sprite.PositionX, 2) + Math.Pow(Sprite.PositionY - lifeForm.Sprite.PositionY, 2)));
         }
 
-        public bool IsInContactZone(LifeForm lifeForm)
+        public bool IsInContactZone(Entity lifeForm)
         {
             // If it's itself, return false
             if (lifeForm == this)

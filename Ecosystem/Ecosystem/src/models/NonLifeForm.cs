@@ -4,8 +4,16 @@ using System.Text;
 
 namespace Ecosystem
 {
-    public abstract class NonLifeForm
+    public abstract class NonLifeForm : Entity
     {
-        public NonLifeForm() { }
+        private bool stillExists = true;
+
+        public NonLifeForm() : base() { }
+
+        public bool StillExists
+        {
+            get { return stillExists; }
+            set { stillExists = value; }
+        }
     }
 }

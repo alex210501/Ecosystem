@@ -14,6 +14,9 @@ namespace Ecosystem
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+
+        //TODO: Test for the moment
+        private List<Entity> entities;
         private List<LifeForm> lifeFormList;
         private List<NonLifeForm> nonLifeFormList;
 
@@ -24,6 +27,7 @@ namespace Ecosystem
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
+            entities = new List<Entity>();
             lifeFormList = new List<LifeForm>();
             nonLifeFormList= new List<NonLifeForm>();
         }
@@ -37,6 +41,11 @@ namespace Ecosystem
         {
             get { return spriteBatch; }
             set { spriteBatch = value; }
+        }
+
+        protected List<Entity> Entities
+        {
+            get { return entities; }
         }
 
         protected List<LifeForm> LifeFormList
@@ -59,13 +68,14 @@ namespace Ecosystem
                 AnimalSex sex = (AnimalSex)rnd.Next(0, 1);
                 Vector2 destination = new Vector2(rnd.Next(0, ScreenWidth), rnd.Next(0, ScreenHeight));
 
-                Carnivore carnivore = new Groudon(Content, GraphicsDevice, sex, 100, 50, 50f, 20f, destination);
+                Carnivore carnivore = new Groudon(Content, GraphicsDevice, sex, 100, 40, 50f, 20f, destination);
 
                 // Place the carnivores in the screen randomly
                 carnivore.Sprite.PositionX = rnd.Next(carnivore.Sprite.FrameWidth, graphics.PreferredBackBufferWidth - carnivore.Sprite.FrameWidth);
                 carnivore.Sprite.PositionY = rnd.Next(carnivore.Sprite.FrameHeight, graphics.PreferredBackBufferHeight - carnivore.Sprite.FrameHeight);
                 carnivore.Sprite.Scale = 0.7f;
 
+                entities.Add(carnivore);
                 lifeFormList.Add(carnivore);
             }
 
@@ -81,6 +91,7 @@ namespace Ecosystem
                 herbivore.Sprite.PositionY = rnd.Next(herbivore.Sprite.FrameHeight, graphics.PreferredBackBufferHeight - herbivore.Sprite.FrameHeight);
                 herbivore.Sprite.Scale = 0.7f;
 
+                entities.Add(herbivore);
                 lifeFormList.Add(herbivore);
             }
 
@@ -93,6 +104,7 @@ namespace Ecosystem
                 plant.Sprite.PositionY = rnd.Next(plant.Sprite.FrameHeight, graphics.PreferredBackBufferHeight - plant.Sprite.FrameHeight);
                 plant.Sprite.Scale = 0.7f;
 
+                entities.Add(plant);
                 lifeFormList.Add(plant);
             }
         }
@@ -112,17 +124,19 @@ namespace Ecosystem
         
         public void Run(GameTime gameTime)
         {
-            LifeFormList.RemoveAll(life => life.IsAlive == false);
+            // entities.RemoveAll(life => (life as LifeForm).IsAlive == false);
+            CheckEntityDeath();
 
+            /*
             foreach (LifeForm lifeForm in LifeFormList)
             {
 
                 if (lifeForm is Animal)
                 {
                     Animal animal = (lifeForm as Animal);
-                    List<LifeForm> visionList = new List<LifeForm>(lifeFormList.FindAll(animal.IsInVisionZone));
+                    List<Entity> visionList = new List<Entity>(lifeFormList.FindAll(animal.IsInVisionZone));
                     if (animal is Herbivore)
-                        RunHerbivore(visionList, animal as Herbivore);
+                        RunHerbivore(visionList, animal as Herbivore); 
                     animal.Walk();
                 }
                 // Console.WriteLine(lifeForm.Sprite.PositionX1
@@ -132,12 +146,36 @@ namespace Ecosystem
                 //if (lifeForm is Animal)
                     //WalkRandom(lifeForm as Animal);
             }
+            */
+            foreach (Entity entity in entities)
+            {
+                if (entity is LifeForm)
+                {
+                    LifeForm lifeForm = (entity as LifeForm);
+
+                    if (lifeForm is Animal)
+                    {
+                        Animal animal = (entity as Animal);
+                        List<Entity> visionList = new List<Entity>(entities.FindAll(animal.IsInVisionZone));
+
+                        Eat(visionList, animal);
+                        animal.Walk();
+                    }
+
+                    // Console.WriteLine(lifeForm.Sprite.PositionX1
+
+                    lifeForm.Routine(gameTime);
+                }
+
+                //if (lifeForm is Animal)
+                //WalkRandom(lifeForm as Animal);
+            }
         }
 
-        public void RunHerbivore(List<LifeForm> visionList, Herbivore herbi)
+        public void RunHerbivore(List<Entity> visionList, Herbivore herbi)
         {
-            List<LifeForm> PlantsInVision = new List<LifeForm>(visionList.FindAll(delegate(LifeForm visionLife) { return visionLife is Plants; }));
-            List<LifeForm> PlantsInContact = new List<LifeForm>(PlantsInVision.FindAll(herbi.IsInContactZone));
+            List<Entity> PlantsInVision = new List<Entity>(visionList.FindAll(delegate(Entity visionLife) { return herbi.CanEat(visionLife as IEatable); }));
+            List<Entity> PlantsInContact = new List<Entity>(PlantsInVision.FindAll(herbi.IsInContactZone));
 
             if (PlantsInVision.Count == 0)
                 return;
@@ -145,16 +183,104 @@ namespace Ecosystem
             if (PlantsInContact.Count != 0)
             {
                 herbi.Eat(PlantsInContact[0] as Plants);
-                PlantsInContact[0].IsAlive = false;
+                (PlantsInContact[0] as LifeForm).IsAlive = false;
                 return;
             }
             else
             {
-                    herbi.DestinationX = PlantsInVision[0].Sprite.PositionX;
-                    herbi.DestinationY = PlantsInVision[0].Sprite.PositionY;
+                herbi.DestinationX = PlantsInVision[0].Sprite.PositionX;
+                herbi.DestinationY = PlantsInVision[0].Sprite.PositionY;
             }
-
         }
 
+        void Eat(List<Entity> visionList, Animal lifeForm)
+        {
+            List<Entity> eatableInVision = new List<Entity>(visionList.FindAll(delegate (Entity visionLife) { return lifeForm.CanEat(visionLife as IEatable); }));
+            List<Entity> eatableInContact = new List<Entity>(eatableInVision.FindAll(lifeForm.IsInContactZone));
+
+            if (eatableInContact.Count != 0)
+            {
+                lifeForm.Eat(eatableInContact[0] as IEatable);
+
+                if (eatableInContact[0] is LifeForm)
+                    (eatableInContact[0] as LifeForm).IsAlive = false;
+                else
+                    (eatableInContact[0] as NonLifeForm).StillExists = false;
+            }
+            else if (eatableInVision.Count != 0)
+            {
+                (lifeForm as Animal).DestinationX = eatableInVision[0].Sprite.PositionX;
+                (lifeForm as Animal).DestinationY = eatableInVision[0].Sprite.PositionY;
+            }
+            else if (lifeForm is Carnivore)
+                Attack(lifeForm as Carnivore, visionList);
+        }
+
+        void Attack(Carnivore carnivore, List<Entity> visionList)
+        {
+            // Get all the Animal that the carnivore can attack
+            List<Entity> attackList = new List<Entity>(visionList.FindAll(delegate (Entity entity) { if (entity is Animal) return carnivore.CanAttack(entity as Animal); else return false; }));
+            List<Entity> attackContactList = new List<Entity>(attackList.FindAll(carnivore.IsInContactZone));
+
+            if (attackList.Count == 0)
+                return;
+
+            // Check if the carnivora can directly attack, or run after its prey
+            if (attackContactList.Count != 0)
+                carnivore.Attack(attackContactList[0] as Animal);
+            else
+            {
+                carnivore.DestinationX = attackList[0].Sprite.PositionX;
+                carnivore.DestinationY = attackList[0].Sprite.PositionY;
+            }
+        }
+
+        void CheckEntityDeath()
+        {
+            List<Entity> entityToRemove = new List<Entity>();
+            List<Entity> entityToAdd = new List<Entity>();
+
+            foreach (Entity entity in entities)
+            {
+                // Transform a death Animal into meat
+                if ((entity is LifeForm) && ((entity as LifeForm).IsAlive == false))
+                {
+                    if (entity is Animal)
+                        entityToAdd.Add(AnimalToMeat(entity as Animal));
+                    entityToRemove.Add(entity);
+                }
+                // Delete the meat which has been eat
+                else if ((entity is NonLifeForm) && ((entity as NonLifeForm).StillExists == false))
+                    entityToRemove.Add(entity);
+            }
+
+            foreach (Entity entity in entityToRemove)
+                entities.Remove(entity);
+            entities.AddRange(entityToAdd);
+
+            /*foreach (Entity entity in entities)
+            {
+                if (entity is Groudon)
+                {
+                    foreach (Entity eatable in entities)
+                    {
+                        if (eatable is Meat)
+                            Console.WriteLine((entity as Groudon).CanEat(eatable as IEatable));
+                    }
+                }
+            }*/
+        }
+
+        public Meat AnimalToMeat(Animal animal)
+        {
+            Meat meat = new Meat(Content, GraphicsDevice, 100, 100);
+
+            // Gave the position of the Animal to the Meat
+            meat.Sprite.PositionX = animal.Sprite.PositionX;
+            meat.Sprite.PositionY = animal.Sprite.PositionY;
+            meat.Load();
+
+            return meat;
+        }
     }
 }
