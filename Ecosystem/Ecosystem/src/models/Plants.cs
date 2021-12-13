@@ -10,11 +10,30 @@ namespace Ecosystem
         private readonly int SeedingZoneRadius;//allow a value
         private float eatingEnergy = 100;
         private float satiationPoint = 100;
+        private bool hasBeenEaten = false;
 
         public Plants(int RootZoneRadius, int SeedingZoneRadius) : base()
         {
             this.RootZoneRadius = RootZoneRadius;
             this.SeedingZoneRadius = SeedingZoneRadius;
+        }
+
+        public float EatingEnergy
+        {
+            get { return eatingEnergy; }
+            set { eatingEnergy = value; }
+        }
+
+        public float SatiationPoint
+        {
+            get { return satiationPoint; }
+            set { satiationPoint = value; }
+        }
+
+        public bool HasBeenEaten
+        {
+            get { return hasBeenEaten; }
+            set { hasBeenEaten = value; }
         }
 
         public override void Eat(IEatable food)
@@ -40,18 +59,6 @@ namespace Ecosystem
         {
             // Reset the reproduction desire
             ReproductionDesire = 0;
-        }
-
-        public float EatingEnergy
-        {
-            get { return eatingEnergy; }
-            set { eatingEnergy = value; }
-        }
-
-        public float SatiationPoint
-        {
-            get { return satiationPoint; }
-            set { satiationPoint = value; }
         }
     }
 }

@@ -8,5 +8,6 @@ namespace Ecosystem
     {
         public float EatingEnergy { get; set; }
         public float SatiationPoint { get; set; }
+        public bool HasBeenEaten { get; set; }
     }
 }

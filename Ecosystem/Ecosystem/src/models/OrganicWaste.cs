@@ -14,6 +14,7 @@ namespace Ecosystem
         
         private float eatingEnergy = 0;
         private float satiationPoint = 0;
+        private bool hasBeenEaten = false;
 
         public OrganicWaste(ContentManager content, GraphicsDevice device, float eatingEnergy, float satiationPoint) : base()
         {
@@ -32,6 +33,12 @@ namespace Ecosystem
         {
             get { return satiationPoint; }
             set { satiationPoint = value; }
+        }
+
+        public bool HasBeenEaten
+        {
+            get { return hasBeenEaten; }
+            set { hasBeenEaten = value; }
         }
 
         public override void Load()
