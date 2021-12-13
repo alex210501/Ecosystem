@@ -202,6 +202,7 @@ namespace Ecosystem
             {
                 lifeForm.Eat(eatableInContact[0] as IEatable);
 
+                (eatableInContact[0] as IEatable).HasBeenEaten = true;
                 if (eatableInContact[0] is LifeForm)
                     (eatableInContact[0] as LifeForm).IsAlive = false;
                 else
@@ -245,8 +246,8 @@ namespace Ecosystem
                 // Transform a death Animal into meat
                 if ((entity is LifeForm) && ((entity as LifeForm).IsAlive == false))
                 {
-                    if (entity is Animal)
-                        entityToAdd.Add(AnimalToMeat(entity as Animal));
+                    if (((entity is Plants) && ((entity as Plants).HasBeenEaten)) == false)
+                        entityToAdd.Add(LifeFormToWaste(entity as LifeForm));
                     entityToRemove.Add(entity);
                 }
                 // Delete the meat which has been eat
@@ -271,16 +272,20 @@ namespace Ecosystem
             }*/
         }
 
-        public Meat AnimalToMeat(Animal animal)
+        public NonLifeForm LifeFormToWaste(LifeForm lifeForm)
         {
-            Meat meat = new Meat(Content, GraphicsDevice, 100, 100);
+            NonLifeForm waste = null;
 
-            // Gave the position of the Animal to the Meat
-            meat.Sprite.PositionX = animal.Sprite.PositionX;
-            meat.Sprite.PositionY = animal.Sprite.PositionY;
-            meat.Load();
+            if (lifeForm is Animal)
+                waste = new Meat(Content, GraphicsDevice, 100, 100);
+            else
+                waste = new OrganicWaste(Content, GraphicsDevice, 100, 100);
 
-            return meat;
+            waste.Sprite.PositionX = lifeForm.Sprite.PositionX;
+            waste.Sprite.PositionY = lifeForm.Sprite.PositionY;
+            waste.Load();
+
+            return waste;
         }
     }
 }
