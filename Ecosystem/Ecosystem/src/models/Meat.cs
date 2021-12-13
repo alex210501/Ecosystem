@@ -17,7 +17,7 @@ namespace Ecosystem
         {
             this.eatingEnergy = eatingEnergy;
             this.satiationPoint = satiationPoint;
-            this.Sprite = new Sprite(content, device, 0, 0, 0);
+            this.Sprite = new Sprite(content, device, 1000, 20, 10);
         }
 
         public float EatingEnergy
@@ -30,6 +30,13 @@ namespace Ecosystem
         {
             get { return satiationPoint; }
             set { satiationPoint = value; }
+        }
+
+        public override void Load()
+        {
+            Sprite.AddTexture("Pictures/Meat/Meat0");
+
+            base.Load();
         }
     }
 }
