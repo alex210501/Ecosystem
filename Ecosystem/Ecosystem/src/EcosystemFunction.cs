@@ -17,8 +17,7 @@ namespace Ecosystem
 
         //TODO: Test for the moment
         private List<Entity> entities;
-        private List<LifeForm> lifeFormList;
-        private List<NonLifeForm> nonLifeFormList;
+        private List<Entity> entitiesToAdd;
 
         public EcosystemFunction()
         {
@@ -28,8 +27,7 @@ namespace Ecosystem
             IsMouseVisible = true;
 
             entities = new List<Entity>();
-            lifeFormList = new List<LifeForm>();
-            nonLifeFormList= new List<NonLifeForm>();
+            entitiesToAdd = new List<Entity>();
         }
 
         protected GraphicsDeviceManager Graphics
@@ -46,16 +44,6 @@ namespace Ecosystem
         protected List<Entity> Entities
         {
             get { return entities; }
-        }
-
-        protected List<LifeForm> LifeFormList
-        {
-            get { return lifeFormList; }
-        }
-
-        protected List<NonLifeForm> NonLifeFormList
-        {
-            get { return nonLifeFormList; }
         }
 
         // TODO: Check the collisions
@@ -76,7 +64,6 @@ namespace Ecosystem
                 carnivore.Sprite.Scale = 0.7f;
 
                 entities.Add(carnivore);
-                lifeFormList.Add(carnivore);
             }
 
             for (int i = 0; i < herbivoresNumber; i++)
@@ -92,12 +79,11 @@ namespace Ecosystem
                 herbivore.Sprite.Scale = 0.7f;
 
                 entities.Add(herbivore);
-                lifeFormList.Add(herbivore);
             }
 
             for (int i = 0; i < plantsNumber; i++)
             {
-                Plants plant = new SunPlant(Content, GraphicsDevice, 100, 50);
+                Plants plant = new SunPlant(Content, GraphicsDevice);
 
                 // Place the herbivore in the screen randomly
                 plant.Sprite.PositionX = rnd.Next(plant.Sprite.FrameWidth, graphics.PreferredBackBufferWidth - plant.Sprite.FrameWidth);
@@ -105,7 +91,6 @@ namespace Ecosystem
                 plant.Sprite.Scale = 0.7f;
 
                 entities.Add(plant);
-                lifeFormList.Add(plant);
             }
         }
 
@@ -124,29 +109,8 @@ namespace Ecosystem
         
         public void Run(GameTime gameTime)
         {
-            // entities.RemoveAll(life => (life as LifeForm).IsAlive == false);
             CheckEntityDeath();
 
-            /*
-            foreach (LifeForm lifeForm in LifeFormList)
-            {
-
-                if (lifeForm is Animal)
-                {
-                    Animal animal = (lifeForm as Animal);
-                    List<Entity> visionList = new List<Entity>(lifeFormList.FindAll(animal.IsInVisionZone));
-                    if (animal is Herbivore)
-                        RunHerbivore(visionList, animal as Herbivore); 
-                    animal.Walk();
-                }
-                // Console.WriteLine(lifeForm.Sprite.PositionX1
-
-                lifeForm.Routine(gameTime);
-
-                //if (lifeForm is Animal)
-                    //WalkRandom(lifeForm as Animal);
-            }
-            */
             foreach (Entity entity in entities)
             {
                 if (entity is LifeForm)
@@ -161,36 +125,16 @@ namespace Ecosystem
                         Eat(visionList, animal);
                         animal.Walk();
                     }
-
-                    // Console.WriteLine(lifeForm.Sprite.PositionX1
+                    else
+                        Reproduction(lifeForm as Plants);
 
                     lifeForm.Routine(gameTime);
                 }
-
-                //if (lifeForm is Animal)
-                //WalkRandom(lifeForm as Animal);
             }
-        }
 
-        public void RunHerbivore(List<Entity> visionList, Herbivore herbi)
-        {
-            List<Entity> PlantsInVision = new List<Entity>(visionList.FindAll(delegate(Entity visionLife) { return herbi.CanEat(visionLife as IEatable); }));
-            List<Entity> PlantsInContact = new List<Entity>(PlantsInVision.FindAll(herbi.IsInContactZone));
+            entities.AddRange(entitiesToAdd);
+            entitiesToAdd.Clear();
 
-            if (PlantsInVision.Count == 0)
-                return;
-
-            if (PlantsInContact.Count != 0)
-            {
-                herbi.Eat(PlantsInContact[0] as Plants);
-                (PlantsInContact[0] as LifeForm).IsAlive = false;
-                return;
-            }
-            else
-            {
-                herbi.DestinationX = PlantsInVision[0].Sprite.PositionX;
-                herbi.DestinationY = PlantsInVision[0].Sprite.PositionY;
-            }
         }
 
         void Eat(List<Entity> visionList, Animal lifeForm)
@@ -258,23 +202,11 @@ namespace Ecosystem
             foreach (Entity entity in entityToRemove)
                 entities.Remove(entity);
             entities.AddRange(entityToAdd);
-
-            /*foreach (Entity entity in entities)
-            {
-                if (entity is Groudon)
-                {
-                    foreach (Entity eatable in entities)
-                    {
-                        if (eatable is Meat)
-                            Console.WriteLine((entity as Groudon).CanEat(eatable as IEatable));
-                    }
-                }
-            }*/
         }
 
         public NonLifeForm LifeFormToWaste(LifeForm lifeForm)
         {
-            NonLifeForm waste = null;
+            NonLifeForm waste;
 
             if (lifeForm is Animal)
                 waste = new Meat(Content, GraphicsDevice, 100, 100);
@@ -286,6 +218,28 @@ namespace Ecosystem
             waste.Load();
 
             return waste;
+        }
+
+        public void Reproduction(Plants flowers)
+        {
+            if (flowers.WantsExpands())
+            {
+                Random rnd = new Random();
+                int Seedingzoneradius = flowers.SEEDINGZoneRadius;
+                //change hardcoded values
+                int the_x_position = rnd.Next((int)flowers.Sprite.PositionX - Seedingzoneradius,(int)flowers.Sprite.PositionX  + Seedingzoneradius);
+                int the_y_position = rnd.Next((int)flowers.Sprite.PositionY - Seedingzoneradius, (int)flowers.Sprite.PositionY + Seedingzoneradius);
+
+                Plants plant = new SunPlant(Content, GraphicsDevice);
+
+
+                flowers.Expands();
+                plant.Sprite.PositionX = the_x_position;
+                plant.Sprite.PositionY = the_y_position;
+                plant.Sprite.Scale = 0.7f;
+                plant.Load();
+                entitiesToAdd.Add(plant);
+            }
         }
     }
 }

@@ -6,16 +6,14 @@ namespace Ecosystem
 {
     public class Plants : LifeForm, IEatable
     {
-        private readonly int RootZoneRadius;//allow a value
-        private readonly int SeedingZoneRadius;//allow a value
+        private readonly int RootZoneRadius = 100;//allow a value
+        private static readonly int SeedingZoneRadius = 50;//allow a value
         private float eatingEnergy = 100;
         private float satiationPoint = 100;
         private bool hasBeenEaten = false;
 
-        public Plants(int RootZoneRadius, int SeedingZoneRadius) : base()
+        public Plants() : base()
         {
-            this.RootZoneRadius = RootZoneRadius;
-            this.SeedingZoneRadius = SeedingZoneRadius;
         }
 
         public float EatingEnergy
@@ -45,12 +43,21 @@ namespace Ecosystem
             }
         }
 
+        public int ROOTZoneRadius
+        {
+            get { return RootZoneRadius; }
+        }
+
+        public int SEEDINGZoneRadius
+        {
+            get { return SeedingZoneRadius; }
+        }
         public override bool CanEat(IEatable food)
         {
             return (food is OrganicWaste);
         }
 
-        public bool WantsExpands(IEatable food)
+        public bool WantsExpands()
         {
             return (ReproductionDesire >= reproductionDesireThreshold);
         }
