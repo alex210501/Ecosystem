@@ -18,6 +18,7 @@ namespace Ecosystem
         private int minimumChild = 0;
         private int minimumSpeed = 50;
         private int maximumPregnancyTime = 9; // 9 seconds
+        private int positionErrorReached = 2;
         protected static readonly float poopDesirePerSecond = 10;
 
         private readonly AnimalSex sex;
@@ -195,7 +196,9 @@ namespace Ecosystem
 
         public bool IsDestinationReached()
         {
-            return ((Sprite.LeftEdge <= destination.X) && (Sprite.RightEdge >= destination.X) && (Sprite.TopEdge <= destination.Y) && (Sprite.BottompEdge >= destination.Y));
+            return ((Sprite.PositionX - positionErrorReached <= destination.X) && (Sprite.PositionX + positionErrorReached >= destination.X) 
+                    && (Sprite.PositionY - positionErrorReached <= destination.Y) && (Sprite.PositionY + positionErrorReached >= destination.Y));
+
         }
 
         public bool IsInVisionZone(Entity lifeForm)

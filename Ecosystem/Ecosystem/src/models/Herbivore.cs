@@ -15,7 +15,7 @@ namespace Ecosystem
             if (CanEat(food))
             {
                 Energy += food.EatingEnergy;
-                Hunger += food.SatiationPoint;
+                Hunger -= food.SatiationPoint;
             }
         }
 

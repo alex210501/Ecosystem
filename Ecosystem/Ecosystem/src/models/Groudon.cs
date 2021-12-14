@@ -14,8 +14,8 @@ namespace Ecosystem
         private static int widthFrame = 60;
         private static int heightFrame = 60;
 
-        public Groudon(ContentManager content, GraphicsDevice device, AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed, float damage) :
-            base(sex, visionZoneRadius, contactZoneRadius, speed, damage)
+        public Groudon(ContentManager content, GraphicsDevice device, AnimalSex sex, float speed, float damage) :
+            base(sex, 100, widthFrame / 2, speed, damage)
         {
             this.Sprite = new Sprite(content, device, timePerFrame, widthFrame, heightFrame);
             this.MaximumChild = 5;
@@ -46,7 +46,7 @@ namespace Ecosystem
             Random rnd = new Random();
             AnimalSex sex = (AnimalSex)rnd.Next(0, 2);
 
-            return new Groudon(Sprite.Content, Sprite.Device, sex, 100, 40, 50f, 20f);
+            return new Groudon(Sprite.Content, Sprite.Device, sex, 50f, 20f);
         }
 
         public override void Load()

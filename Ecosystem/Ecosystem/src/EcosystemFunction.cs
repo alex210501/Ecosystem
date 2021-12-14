@@ -55,7 +55,7 @@ namespace Ecosystem
             {
                 AnimalSex sex = (AnimalSex)rnd.Next(0, 2);
 
-                Carnivore carnivore = new Groudon(Content, GraphicsDevice, sex, 100, 40, 50f, 20f);
+                Carnivore carnivore = new Groudon(Content, GraphicsDevice, sex, 50f, 20f);
 
                 // Place the carnivores in the screen randomly
                 carnivore.DestinationX = rnd.Next(0, ScreenWidth);
@@ -71,7 +71,7 @@ namespace Ecosystem
             {
                 AnimalSex sex = (AnimalSex)rnd.Next(0, 2);
 
-                Herbivore herbivore= new Herbizarre(Content, GraphicsDevice, sex, 100, 30, 30f);
+                Herbivore herbivore= new Herbizarre(Content, GraphicsDevice, sex, 30f);
 
                 // Place the herbivore in the screen randomly
                 herbivore.DestinationX = rnd.Next(0, ScreenWidth);
@@ -127,6 +127,7 @@ namespace Ecosystem
                         Eat(visionList, animal);
                         Reproduction(visionList, animal);
                         GiveBirth(animal);
+                        // animal.Walk();
                         WalkRandom(animal);
                     }
                     else
@@ -143,6 +144,9 @@ namespace Ecosystem
 
         void Eat(List<Entity> visionList, Animal lifeForm)
         {
+            if (lifeForm.IsHungry() == false)
+                return;
+
             List<Entity> eatableInVision = new List<Entity>(visionList.FindAll(delegate (Entity visionLife) { return lifeForm.CanEat(visionLife as IEatable); }));
             List<Entity> eatableInContact = new List<Entity>(eatableInVision.FindAll(lifeForm.IsInContactZone));
 

@@ -9,7 +9,7 @@ namespace Ecosystem
         private readonly int RootZoneRadius = 100;//allow a value
         private static readonly int SeedingZoneRadius = 50;//allow a value
         private float eatingEnergy = 100;
-        private float satiationPoint = 100;
+        private float satiationPoint = 20;
         private bool hasBeenEaten = false;
 
         public Plants() : base()

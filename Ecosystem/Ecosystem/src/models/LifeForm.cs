@@ -17,10 +17,10 @@ namespace Ecosystem
         protected static readonly float maxReproductionDesire = 100;
         protected static readonly float healthToGive = 20; // Life to give, when we convert life to energy
         protected static readonly float reproductionDesireThreshold = 70;
-        protected static readonly float hungerThreshold = 70;
+        protected static readonly float hungerThreshold = 40;
         protected static readonly float reproductionDesirePerSecond = 10;
         protected static readonly float hungerPerSecond = 10;
-        protected static readonly float energyPerSecond = 5;
+        protected static readonly float energyPerSecond = 10;
 
         private float health = 100;
         private float energy = 100;
@@ -113,7 +113,7 @@ namespace Ecosystem
             // Time management of different parameters of a LifeForm
             Energy -= (energyPerSecond * timeElapsed);
             ReproductionDesire += (reproductionDesirePerSecond * timeElapsed);
-            Hunger -= (hungerPerSecond * timeElapsed);
+            Hunger += (hungerPerSecond * timeElapsed);
 
             // If there's no more energy, we convert the healt into energy
             if (energy == 0)

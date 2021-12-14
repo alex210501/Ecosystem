@@ -14,8 +14,8 @@ namespace Ecosystem
         private static int widthFrame = 40;
         private static int heightFrame = 30;
 
-        public Herbizarre(ContentManager content, GraphicsDevice device, AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed) : 
-            base (sex, visionZoneRadius, contactZoneRadius, speed)
+        public Herbizarre(ContentManager content, GraphicsDevice device, AnimalSex sex, float speed) : 
+            base (sex, 100, widthFrame/2, speed)
         {
             this.Sprite = new Sprite(content, device, timePerFrame, widthFrame, heightFrame);
             MaximumChild = 5;
@@ -46,7 +46,7 @@ namespace Ecosystem
             Random rnd = new Random();
             AnimalSex sex = (AnimalSex)rnd.Next(0, 2);
 
-            return new Herbizarre(Sprite.Content, Sprite.Device, sex, 100, 30, 30f);
+            return new Herbizarre(Sprite.Content, Sprite.Device, sex, 30f);
         }
 
         public override void Load()
