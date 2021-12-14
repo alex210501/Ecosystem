@@ -103,7 +103,7 @@ namespace Ecosystem
                 Random rnd = new Random();
 
                 animal.DestinationX = rnd.Next(0, ScreenWidth);
-                animal.DestinationY = rnd.Next(0, ScreenHeight );
+                animal.DestinationY = rnd.Next(0, ScreenHeight);
             }
 
             animal.Walk();
@@ -127,7 +127,7 @@ namespace Ecosystem
                         Eat(visionList, animal);
                         Reproduction(visionList, animal);
                         GiveBirth(animal);
-                        animal.Walk();
+                        WalkRandom(animal);
                     }
                     else
                         PlantExpands(lifeForm as Plants);
@@ -256,8 +256,6 @@ namespace Ecosystem
 
             if (canReproduce.Count == 0)
                 return;
-
-            // Console.WriteLine(canReproduce.Count);
 
             if (canReproduceContact.Count > 0)
                 animal.Reproduction(canReproduceContact[0] as Animal);

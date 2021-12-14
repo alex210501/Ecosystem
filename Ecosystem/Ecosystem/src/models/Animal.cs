@@ -16,6 +16,7 @@ namespace Ecosystem
         private static readonly float poopThreshold = 70;
         private int maximumChild = 12;
         private int minimumChild = 0;
+        private int minimumSpeed = 50;
         private int maximumPregnancyTime = 9; // 9 seconds
         protected static readonly float poopDesirePerSecond = 10;
 
@@ -80,7 +81,7 @@ namespace Ecosystem
 
         public float Speed
         {
-            get { return (speed * (Energy / 100)); }
+            get { return (minimumSpeed + ((speed - minimumSpeed)/maxEnergy)*Energy); }
         }
 
         public float PoopDesire
@@ -194,7 +195,7 @@ namespace Ecosystem
 
         public bool IsDestinationReached()
         {
-            return ((Sprite.PositionX == destination.X) && (Sprite.PositionY == destination.Y));
+            return ((Sprite.LeftEdge <= destination.X) && (Sprite.RightEdge >= destination.X) && (Sprite.TopEdge <= destination.Y) && (Sprite.BottompEdge >= destination.Y));
         }
 
         public bool IsInVisionZone(Entity lifeForm)

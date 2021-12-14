@@ -82,7 +82,7 @@ namespace Ecosystem
 
         public int RightEdge
         {
-            get { return (int)(PositionX - frameWidth); }
+            get { return (int)(PositionX + frameWidth); }
         }
 
         public int TopEdge
