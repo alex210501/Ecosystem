@@ -10,7 +10,7 @@ namespace Ecosystem
 {
     public class Sprite
     {
-        ContentManager content;
+        private ContentManager content;
         private GraphicsDevice device;
         private SpriteBatch spriteBatch;
         private float timePerFrame = 100;
@@ -33,6 +33,16 @@ namespace Ecosystem
             this.frameHeight = frameHeight;
 
             frame = new List<Texture2D>();
+        }
+
+        public ContentManager Content
+        {
+            get { return content; }
+        }
+
+        public GraphicsDevice Device
+        {
+            get { return device; }
         }
 
         public int FrameWidth

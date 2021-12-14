@@ -16,7 +16,7 @@ namespace Ecosystem
         private static readonly float poopThreshold = 70;
         private int maximumChild = 12;
         private int minimumChild = 0;
-        private int maximumPregnancyTime = 0;
+        private int maximumPregnancyTime = 9; // 9 seconds
         protected static readonly float poopDesirePerSecond = 10;
 
         private readonly AnimalSex sex;
@@ -29,14 +29,14 @@ namespace Ecosystem
         private float pregnancyTime = 0;
         private Vector2 destination;
 
-        protected Animal(AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed, Vector2 destination) :
+        protected Animal(AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed) :
             base()
         {
             this.sex = sex;
             this.visionZoneRadius = visionZoneRadius;
             this.contactZoneRadius = contactZoneRadius;
             this.speed = speed;
-            this.destination = destination;
+            this.destination = new Vector2(150, 150);
         }
 
         public AnimalSex Sex
@@ -115,7 +115,7 @@ namespace Ecosystem
 
         public virtual bool CanReproduce(Animal animal)
         {
-            return Sex != animal.Sex;
+            return (Sex != animal.Sex) && (IsPregnant == false)  && (animal.IsPregnant == false);
         }
 
         public virtual void Reproduction(Animal animal)
@@ -129,6 +129,7 @@ namespace Ecosystem
                 else SetPregnant(numberChild);
 
                 ReproductionDesire = 0;
+                animal.ReproductionDesire = 0;
             }
         }
 
@@ -136,8 +137,17 @@ namespace Ecosystem
         {
             if (isPregnant == false)
                 return false;
-
+            
             return (pregnancyTime >= maximumPregnancyTime);
+        }
+
+        public int GiveBirht()
+        {
+            ReproductionDesire = 0;
+            isPregnant = false;
+            pregnancyTime = 0;
+
+            return numberChild;
         }
 
         public void SetPregnant(int numberChild)
@@ -149,6 +159,8 @@ namespace Ecosystem
             pregnancyTime = 0;
             this.numberChild = numberChild;
         }
+
+        public abstract Animal GetAnimalInstance();
 
         public bool WantReproduce()
         {
@@ -219,7 +231,7 @@ namespace Ecosystem
 
         public override void Routine(GameTime gameTime)
         {
-            float timeElapsed = (gameTime.ElapsedGameTime.Milliseconds / 1000);
+            float timeElapsed = ((float)gameTime.ElapsedGameTime.Milliseconds / 1000);
 
             pregnancyTime += timeElapsed;
             PoopDesire += (poopDesirePerSecond * timeElapsed);

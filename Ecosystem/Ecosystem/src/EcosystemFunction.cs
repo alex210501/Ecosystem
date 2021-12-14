@@ -53,12 +53,13 @@ namespace Ecosystem
 
             for (int i = 0; i < carnivoresNumber; i++)
             {
-                AnimalSex sex = (AnimalSex)rnd.Next(0, 1);
-                Vector2 destination = new Vector2(rnd.Next(0, ScreenWidth), rnd.Next(0, ScreenHeight));
+                AnimalSex sex = (AnimalSex)rnd.Next(0, 2);
 
-                Carnivore carnivore = new Groudon(Content, GraphicsDevice, sex, 100, 40, 50f, 20f, destination);
+                Carnivore carnivore = new Groudon(Content, GraphicsDevice, sex, 100, 40, 50f, 20f);
 
                 // Place the carnivores in the screen randomly
+                carnivore.DestinationX = rnd.Next(0, ScreenWidth);
+                carnivore.DestinationY = rnd.Next(0, ScreenHeight);
                 carnivore.Sprite.PositionX = rnd.Next(carnivore.Sprite.FrameWidth, graphics.PreferredBackBufferWidth - carnivore.Sprite.FrameWidth);
                 carnivore.Sprite.PositionY = rnd.Next(carnivore.Sprite.FrameHeight, graphics.PreferredBackBufferHeight - carnivore.Sprite.FrameHeight);
                 carnivore.Sprite.Scale = 0.7f;
@@ -68,12 +69,13 @@ namespace Ecosystem
 
             for (int i = 0; i < herbivoresNumber; i++)
             {
-                AnimalSex sex = (AnimalSex)rnd.Next(0, 1);
-                Vector2 destination = new Vector2(rnd.Next(0, ScreenWidth), rnd.Next(0, ScreenHeight));
+                AnimalSex sex = (AnimalSex)rnd.Next(0, 2);
 
-                Herbivore herbivore= new Herbizarre(Content, GraphicsDevice, sex, 100, 30, 30f, destination);
+                Herbivore herbivore= new Herbizarre(Content, GraphicsDevice, sex, 100, 30, 30f);
 
                 // Place the herbivore in the screen randomly
+                herbivore.DestinationX = rnd.Next(0, ScreenWidth);
+                herbivore.DestinationY = rnd.Next(0, ScreenHeight);
                 herbivore.Sprite.PositionX = rnd.Next(herbivore.Sprite.FrameWidth, graphics.PreferredBackBufferWidth - herbivore.Sprite.FrameWidth);
                 herbivore.Sprite.PositionY = rnd.Next(herbivore.Sprite.FrameHeight, graphics.PreferredBackBufferHeight - herbivore.Sprite.FrameHeight);
                 herbivore.Sprite.Scale = 0.7f;
@@ -124,6 +126,7 @@ namespace Ecosystem
 
                         Eat(visionList, animal);
                         Reproduction(visionList, animal);
+                        GiveBirth(animal);
                         animal.Walk();
                     }
                     else
@@ -254,12 +257,39 @@ namespace Ecosystem
             if (canReproduce.Count == 0)
                 return;
 
+            // Console.WriteLine(canReproduce.Count);
+
             if (canReproduceContact.Count > 0)
-                animal.Reproduction(canReproduce[0] as Animal);
+                animal.Reproduction(canReproduceContact[0] as Animal);
             else
             {
                 animal.DestinationX = canReproduce[0].Sprite.PositionX;
                 animal.DestinationY = canReproduce[0].Sprite.PositionY;
+            }
+        }
+
+        public void GiveBirth(Animal animal)
+        {
+            if (animal.CanGiveBirth() == false)
+                return;
+
+            Random rnd = new Random();
+            int childNumber = animal.GiveBirht();
+
+            for (int i = 0; i < childNumber; i++)
+            {
+                Animal animalInstance = animal.GetAnimalInstance();
+
+                animalInstance.Sprite.PositionX = (float)rnd.Next((int)animal.Sprite.PositionX - animal.VisionZoneRadius,
+                                                   (int)animal.Sprite.PositionX + animal.VisionZoneRadius);
+                animalInstance.Sprite.PositionY = (float)rnd.Next((int)animal.Sprite.PositionY - animal.VisionZoneRadius,
+                                                   (int)animal.Sprite.PositionY + animal.VisionZoneRadius);
+                animalInstance.DestinationX = rnd.Next(0, ScreenWidth);
+                animalInstance.DestinationY = rnd.Next(0, ScreenHeight);
+                animalInstance.Sprite.Scale = 0.7f;
+                animalInstance.Load();
+
+                entitiesToAdd.Add(animalInstance);
             }
         }
     }

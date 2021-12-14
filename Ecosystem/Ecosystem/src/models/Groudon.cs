@@ -14,8 +14,8 @@ namespace Ecosystem
         private static int widthFrame = 60;
         private static int heightFrame = 60;
 
-        public Groudon(ContentManager content, GraphicsDevice device, AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed, float damage, Vector2 destination) :
-            base(sex, visionZoneRadius, contactZoneRadius, speed, damage, destination)
+        public Groudon(ContentManager content, GraphicsDevice device, AnimalSex sex, int visionZoneRadius, int contactZoneRadius, float speed, float damage) :
+            base(sex, visionZoneRadius, contactZoneRadius, speed, damage)
         {
             this.Sprite = new Sprite(content, device, timePerFrame, widthFrame, heightFrame);
             this.MaximumChild = 5;
@@ -39,6 +39,14 @@ namespace Ecosystem
         public override bool CanReproduce(Animal animal)
         {
             return (animal is Groudon) && (base.CanReproduce(animal));
+        }
+
+        public override Animal GetAnimalInstance()
+        {
+            Random rnd = new Random();
+            AnimalSex sex = (AnimalSex)rnd.Next(0, 2);
+
+            return new Groudon(Sprite.Content, Sprite.Device, sex, 100, 40, 50f, 20f);
         }
 
         public override void Load()

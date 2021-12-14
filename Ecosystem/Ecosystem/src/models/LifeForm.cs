@@ -20,7 +20,7 @@ namespace Ecosystem
         protected static readonly float hungerThreshold = 70;
         protected static readonly float reproductionDesirePerSecond = 10;
         protected static readonly float hungerPerSecond = 10;
-        protected static readonly float energyPerSecond = 10;
+        protected static readonly float energyPerSecond = 5;
 
         private float health = 100;
         private float energy = 100;
