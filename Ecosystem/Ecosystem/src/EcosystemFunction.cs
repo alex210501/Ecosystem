@@ -11,6 +11,7 @@ namespace Ecosystem
     {
         protected readonly int ScreenWidth = 1280;
         protected readonly int ScreenHeight = 700;
+        List<Plants> Plants_to_add = new List<Plants>();
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -86,7 +87,7 @@ namespace Ecosystem
 
             for (int i = 0; i < plantsNumber; i++)
             {
-                Plants plant = new SunPlant(Content, GraphicsDevice, 100, 50);
+                Plants plant = new SunPlant(Content, GraphicsDevice);
 
                 // Place the herbivore in the screen randomly
                 plant.Sprite.PositionX = rnd.Next(plant.Sprite.FrameWidth, graphics.PreferredBackBufferWidth - plant.Sprite.FrameWidth);
@@ -126,12 +127,18 @@ namespace Ecosystem
                     animal.Walk();
                 }
                 // Console.WriteLine(lifeForm.Sprite.PositionX1
-
+                else
+                {
+                    Reproduction(lifeForm as Plants);
+                }
+                
                 lifeForm.Routine(gameTime);
 
                 //if (lifeForm is Animal)
                     //WalkRandom(lifeForm as Animal);
             }
+            LifeFormList.AddRange(Plants_to_add);
+            Plants_to_add.Clear();
         }
 
         public void RunHerbivore(List<LifeForm> visionList, Herbivore herbi)
@@ -154,6 +161,27 @@ namespace Ecosystem
                     herbi.DestinationY = PlantsInVision[0].Sprite.PositionY;
             }
 
+        }
+
+        public void Reproduction(Plants flowers)
+        {
+            if (flowers.WantsExpands())
+            {
+                Random rnd = new Random();
+                int Seedingzoneradius = flowers.SEEDINGZoneRadius;
+                //change hardcoded values
+                int the_x_position = rnd.Next((int)flowers.Sprite.PositionX - Seedingzoneradius,(int)flowers.Sprite.PositionX  + Seedingzoneradius);
+                int the_y_position = rnd.Next((int)flowers.Sprite.PositionY - Seedingzoneradius, (int)flowers.Sprite.PositionY + Seedingzoneradius);
+
+                Plants plant = new SunPlant(Content, GraphicsDevice);
+
+                plant.Sprite.PositionX = the_x_position;
+                plant.Sprite.PositionY = the_y_position;
+                plant.Sprite.Scale = 0.7f;
+                plant.Load();
+                Plants_to_add.Add(plant);
+                flowers.Expands();
+            }
         }
 
     }

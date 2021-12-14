@@ -14,7 +14,7 @@ namespace Ecosystem
         private static int widthFrame = 40;
         private static int heightFrame = 50;
 
-        public SunPlant(ContentManager content, GraphicsDevice device, int rootZoneRadius, int seedingZoneRadius) : base(rootZoneRadius, seedingZoneRadius)
+        public SunPlant(ContentManager content, GraphicsDevice device) : base()
         {
             this.Sprite = new Sprite(content, device, timePerFrame, widthFrame, heightFrame);
         }
