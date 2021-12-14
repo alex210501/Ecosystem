@@ -123,10 +123,11 @@ namespace Ecosystem
                         List<Entity> visionList = new List<Entity>(entities.FindAll(animal.IsInVisionZone));
 
                         Eat(visionList, animal);
+                        Reproduction(visionList, animal);
                         animal.Walk();
                     }
                     else
-                        Reproduction(lifeForm as Plants);
+                        PlantExpands(lifeForm as Plants);
 
                     lifeForm.Routine(gameTime);
                 }
@@ -220,7 +221,7 @@ namespace Ecosystem
             return waste;
         }
 
-        public void Reproduction(Plants flowers)
+        public void PlantExpands(Plants flowers)
         {
             if (flowers.WantsExpands())
             {
@@ -239,6 +240,26 @@ namespace Ecosystem
                 plant.Sprite.Scale = 0.7f;
                 plant.Load();
                 entitiesToAdd.Add(plant);
+            }
+        }
+
+        public void Reproduction(List<Entity> visionZone, Animal animal)
+        {
+            if (animal.WantReproduce() == false)
+                return;
+
+            List<Entity> canReproduce = new List<Entity>(visionZone.FindAll(delegate (Entity entity) { return (entity is Animal) && animal.CanReproduce(entity as Animal); }));
+            List<Entity> canReproduceContact = new List<Entity>(canReproduce.FindAll(animal.IsInVisionZone));
+
+            if (canReproduce.Count == 0)
+                return;
+
+            if (canReproduceContact.Count > 0)
+                animal.Reproduction(canReproduce[0] as Animal);
+            else
+            {
+                animal.DestinationX = canReproduce[0].Sprite.PositionX;
+                animal.DestinationY = canReproduce[0].Sprite.PositionY;
             }
         }
     }

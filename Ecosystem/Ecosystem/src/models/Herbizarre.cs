@@ -35,6 +35,10 @@ namespace Ecosystem
             get { return heightFrame; }
         }
 
+        public override bool CanReproduce(Animal animal)
+        {
+            return (animal is Herbizarre) && (base.CanReproduce(animal));
+        }
         public override void Load()
         {
             Sprite.AddTexture("Pictures/Herbizarre/Herbizarre0");

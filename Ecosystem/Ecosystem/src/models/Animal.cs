@@ -47,13 +47,13 @@ namespace Ecosystem
         public int MaximumChild
         {
             get { return maximumChild; }
-            private set { maximumChild = value; }
+            protected set { maximumChild = value; }
         }
 
         public int MinimumChild
         {
             get { return minimumChild; }
-            private set { minimumChild = value; }
+            protected set { minimumChild = value; }
         }
 
         public int MaximumPregnancyTime
@@ -113,15 +113,22 @@ namespace Ecosystem
             set { destination.Y = value; }
         }
 
-        public void Reproduction(Animal animal)
+        public virtual bool CanReproduce(Animal animal)
         {
-            if (Sex != animal.Sex)
+            return Sex != animal.Sex;
+        }
+
+        public virtual void Reproduction(Animal animal)
+        {
+            if (CanReproduce(animal))
             {
                 Random random = new Random();
                 int numberChild = random.Next(minimumChild, maximumChild);
 
                 if (Sex == AnimalSex.Male) animal.SetPregnant(numberChild);
                 else SetPregnant(numberChild);
+
+                ReproductionDesire = 0;
             }
         }
 

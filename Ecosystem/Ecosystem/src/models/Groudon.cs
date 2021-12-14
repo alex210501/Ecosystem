@@ -18,6 +18,7 @@ namespace Ecosystem
             base(sex, visionZoneRadius, contactZoneRadius, speed, damage, destination)
         {
             this.Sprite = new Sprite(content, device, timePerFrame, widthFrame, heightFrame);
+            this.MaximumChild = 5;
         }
 
         public static int TimePerFrame
@@ -33,6 +34,11 @@ namespace Ecosystem
         public static int HeightFrame
         {
             get { return heightFrame; }
+        }
+
+        public override bool CanReproduce(Animal animal)
+        {
+            return (animal is Groudon) && (base.CanReproduce(animal));
         }
 
         public override void Load()
