@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Ecosystem
 {
-    class OrganicWaste : NonLifeForm, IEatable
+    public class OrganicWaste : NonLifeForm, IEatable
     {
         private int frameWidth = 20;
         private int frameHeight = 20;

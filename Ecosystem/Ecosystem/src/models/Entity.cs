@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Ecosystem
 {
@@ -36,6 +39,11 @@ namespace Ecosystem
                 return false;
             
             return (Math.Pow(radius, 2) >= (Math.Pow(Sprite.PositionX - entity.Sprite.PositionX, 2) + Math.Pow(Sprite.PositionY - entity.Sprite.PositionY, 2)));
+        }
+
+        public virtual void Routine(GameTime gameTime)
+        {
+            sprite.Update(gameTime);
         }
     }
 }

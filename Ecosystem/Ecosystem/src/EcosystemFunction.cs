@@ -138,9 +138,9 @@ namespace Ecosystem
                         EatPlants(rootList, plant);
                         PlantExpands(plant);
                     }
-
-                    lifeForm.Routine(gameTime);
                 }
+
+                entity.Routine(gameTime);
             }
 
             entities.AddRange(entitiesToAdd);
@@ -223,7 +223,12 @@ namespace Ecosystem
                 }
                 // Delete the meat which has been eat
                 else if ((entity is NonLifeForm) && ((entity as NonLifeForm).StillExists == false))
+                {
+                    // Convert Meat to OrganicWaste if rot
+                    if ((entity is Meat) && (entity as Meat).IsRot)
+                        entityToAdd.Add(MeatToWaste(entity as Meat));
                     entityToRemove.Add(entity);
+                }
             }
 
             foreach (Entity entity in entityToRemove)
@@ -242,6 +247,17 @@ namespace Ecosystem
 
             waste.Sprite.PositionX = lifeForm.Sprite.PositionX;
             waste.Sprite.PositionY = lifeForm.Sprite.PositionY;
+            waste.Load();
+
+            return waste;
+        }
+
+        public OrganicWaste MeatToWaste(Meat meat)
+        {
+            OrganicWaste waste = new OrganicWaste(Content, GraphicsDevice, 100, 100);
+
+            waste.Sprite.PositionX = meat.Sprite.PositionX;
+            waste.Sprite.PositionY = meat.Sprite.PositionY;
             waste.Load();
 
             return waste;

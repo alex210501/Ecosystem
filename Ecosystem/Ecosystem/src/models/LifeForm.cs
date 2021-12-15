@@ -106,7 +106,7 @@ namespace Ecosystem
             Health -= healthToGive;
         }
 
-        public virtual void Routine(GameTime gameTime)
+        public override void Routine(GameTime gameTime)
         {
             float timeElapsed = ((float)gameTime.ElapsedGameTime.Milliseconds / 1000);
 
@@ -118,8 +118,6 @@ namespace Ecosystem
             // If there's no more energy, we convert the healt into energy
             if (energy == 0)
                 LifeToEnergy();
-
-            Sprite.Update(gameTime);
         }
     }
 }

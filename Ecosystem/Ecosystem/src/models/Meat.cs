@@ -12,10 +12,13 @@ namespace Ecosystem
     {
         private int frameWidth = 20;
         private int frameHeight = 10;
+        private readonly int maximumRotTime = 10;
 
         private float eatingEnergy = 0;
         private float satiationPoint = 0;
+        private float timeToRot = 0;
         private bool hasBeenEaten = false;
+        private bool isRot = false;
         
         public Meat(ContentManager content, GraphicsDevice device, float eatingEnergy, float satiationPoint) : base() 
         {
@@ -42,11 +45,29 @@ namespace Ecosystem
             set { hasBeenEaten = value; }
         }
 
+        public bool IsRot
+        {
+            get { return isRot; }
+        }
+
         public override void Load()
         {
             Sprite.AddTexture("Pictures/Meat/Meat0");
 
             base.Load();
+        }
+
+        public override void Routine(GameTime gameTime)
+        {
+            timeToRot += ((float)gameTime.ElapsedGameTime.Milliseconds / 1000);
+
+            if (timeToRot >= maximumRotTime)
+            {
+                StillExists = false;
+                isRot = true;
+            }
+
+            base.Routine(gameTime);
         }
     }
 }
