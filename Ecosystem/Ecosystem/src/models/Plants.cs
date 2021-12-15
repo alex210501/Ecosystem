@@ -67,5 +67,10 @@ namespace Ecosystem
             // Reset the reproduction desire
             ReproductionDesire = 0;
         }
+
+        public bool IsInRootZone(Entity entity)
+        {
+            return IsInZone(entity, RootZoneRadius);
+        }
     }
 }
