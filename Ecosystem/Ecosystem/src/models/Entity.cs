@@ -34,7 +34,7 @@ namespace Ecosystem
 
             if ((entity.Sprite.TopEdge > (Sprite.BottompEdge + radius)) || (entity.Sprite.BottompEdge < (Sprite.TopEdge - radius)))
                 return false;
-
+            
             return (Math.Pow(radius, 2) >= (Math.Pow(Sprite.PositionX - entity.Sprite.PositionX, 2) + Math.Pow(Sprite.PositionY - entity.Sprite.PositionY, 2)));
         }
     }

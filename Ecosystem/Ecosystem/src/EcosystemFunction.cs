@@ -124,14 +124,20 @@ namespace Ecosystem
                         Animal animal = (entity as Animal);
                         List<Entity> visionList = new List<Entity>(entities.FindAll(animal.IsInVisionZone));
 
-                        Eat(visionList, animal);
+                        EatAnimal(visionList, animal);
                         Reproduction(visionList, animal);
                         GiveBirth(animal);
                         // animal.Walk();
                         WalkRandom(animal);
                     }
                     else
-                        PlantExpands(lifeForm as Plants);
+                    {
+                        Plants plant = (entity as Plants);
+
+                        List<Entity> rootList = new List<Entity>(entities.FindAll(plant.IsInRootZone));
+                        EatPlants(rootList, plant);
+                        PlantExpands(plant);
+                    }
 
                     lifeForm.Routine(gameTime);
                 }
@@ -142,7 +148,7 @@ namespace Ecosystem
 
         }
 
-        void Eat(List<Entity> visionList, Animal lifeForm)
+        void EatAnimal(List<Entity> visionList, Animal lifeForm)
         {
             if (lifeForm.IsHungry() == false)
                 return;
@@ -151,22 +157,35 @@ namespace Ecosystem
             List<Entity> eatableInContact = new List<Entity>(eatableInVision.FindAll(lifeForm.IsInContactZone));
 
             if (eatableInContact.Count != 0)
-            {
-                lifeForm.Eat(eatableInContact[0] as IEatable);
-
-                (eatableInContact[0] as IEatable).HasBeenEaten = true;
-                if (eatableInContact[0] is LifeForm)
-                    (eatableInContact[0] as LifeForm).IsAlive = false;
-                else
-                    (eatableInContact[0] as NonLifeForm).StillExists = false;
-            }
+                Eat(lifeForm, eatableInContact[0] as IEatable);
             else if (eatableInVision.Count != 0)
             {
-                (lifeForm as Animal).DestinationX = eatableInVision[0].Sprite.PositionX;
-                (lifeForm as Animal).DestinationY = eatableInVision[0].Sprite.PositionY;
+                lifeForm.DestinationX = eatableInVision[0].Sprite.PositionX;
+                lifeForm.DestinationY = eatableInVision[0].Sprite.PositionY;
             }
             else if (lifeForm is Carnivore)
                 Attack(lifeForm as Carnivore, visionList);
+        }
+
+        void EatPlants(List<Entity> rootList, Plants plant)
+        {
+            if (plant.IsHungry() == false)
+                return;
+
+            List<Entity> eatList = new List<Entity>(rootList.FindAll(delegate (Entity entity) { return plant.CanEat(entity as IEatable); }));
+
+            if (eatList.Count != 0)
+                Eat(plant, eatList[0] as IEatable);
+        }
+
+        void Eat(LifeForm eater, IEatable food)
+        {
+            eater.Eat(food);
+            food.HasBeenEaten = true;
+            if (food is LifeForm)
+                (food as LifeForm).IsAlive = false;
+            else 
+                (food as NonLifeForm).StillExists = false;
         }
 
         void Attack(Carnivore carnivore, List<Entity> visionList)
