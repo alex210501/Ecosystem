@@ -227,7 +227,7 @@ namespace Ecosystem
                 {
                     // Convert Meat to OrganicWaste if rot
                     if ((entity is Meat) && (entity as Meat).IsRot)
-                        entityToAdd.Add(MeatToWaste(entity as Meat));
+                        entityToAdd.Add(MeatToOrganicWaste(entity as Meat));
                     entityToRemove.Add(entity);
                 }
             }
@@ -253,7 +253,7 @@ namespace Ecosystem
             return waste;
         }
 
-        public OrganicWaste MeatToWaste(Meat meat)
+        public OrganicWaste MeatToOrganicWaste(Meat meat)
         {
             OrganicWaste waste = new OrganicWaste(Content, GraphicsDevice, 100, 100);
 
@@ -312,7 +312,7 @@ namespace Ecosystem
                 return;
 
             Random rnd = new Random();
-            int childNumber = animal.GiveBirht();
+            int childNumber = animal.GiveBirth();
 
             for (int i = 0; i < childNumber; i++)
             {

@@ -9,8 +9,8 @@ namespace Ecosystem
 {
     public class OrganicWaste : NonLifeForm, IEatable
     {
-        private int frameWidth = 20;
-        private int frameHeight = 20;
+        private readonly int frameWidth = 20;
+        private readonly int frameHeight = 20;
         
         private float eatingEnergy = 0;
         private float satiationPoint = 0;

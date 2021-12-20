@@ -143,7 +143,7 @@ namespace Ecosystem
             return (pregnancyTime >= maximumPregnancyTime);
         }
 
-        public int GiveBirht()
+        public int GiveBirth()
         {
             ReproductionDesire = 0;
             isPregnant = false;

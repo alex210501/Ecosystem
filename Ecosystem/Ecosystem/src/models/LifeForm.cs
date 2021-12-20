@@ -118,6 +118,8 @@ namespace Ecosystem
             // If there's no more energy, we convert the healt into energy
             if (energy == 0)
                 LifeToEnergy();
+
+            base.Routine(gameTime);
         }
     }
 }

@@ -10,8 +10,8 @@ namespace Ecosystem
 {
     public class Meat : NonLifeForm, IEatable
     {
-        private int frameWidth = 20;
-        private int frameHeight = 10;
+        private readonly int frameWidth = 20;
+        private readonly int frameHeight = 10;
         private readonly int maximumRotTime = 10;
 
         private float eatingEnergy = 0;
