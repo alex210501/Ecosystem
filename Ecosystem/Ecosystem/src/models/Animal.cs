@@ -173,6 +173,11 @@ namespace Ecosystem
         {
             return (poopDesire >= poopThreshold);
         }
+
+        public void Poop()
+        {
+            PoopDesire = 0;
+        }
         
         public void Walk()
         {

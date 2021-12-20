@@ -127,8 +127,9 @@ namespace Ecosystem
                         Eat(visionList, animal);
                         Reproduction(visionList, animal);
                         GiveBirth(animal);
-                        // animal.Walk();
+                        Poop(animal);
                         WalkRandom(animal);
+
                     }
                     else
                         PlantExpands(lifeForm as Plants);
@@ -292,6 +293,21 @@ namespace Ecosystem
                 animalInstance.Load();
 
                 entitiesToAdd.Add(animalInstance);
+            }
+        }
+
+        public void Poop(Animal animal)
+        {
+            NonLifeForm waste;
+            if (animal.WantPoop())
+            {
+                waste = new OrganicWaste(Content, GraphicsDevice, 100, 100);
+
+                waste.Sprite.PositionX = animal.Sprite.PositionX;
+                waste.Sprite.PositionY = animal.Sprite.PositionY;
+                waste.Load();
+                animal.Poop();
+                entitiesToAdd.Add(waste);
             }
         }
     }
