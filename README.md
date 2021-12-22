@@ -44,11 +44,16 @@ Every entities is represented by a sprite.
 	<img src="./Ecosystem/Ecosystem/Content/Pictures/Meat/Meat0.png" alt="Meat" width="50" >
 </p>
 
+## Class diagram
 <p align="center">
 	<a href="./Diagrams/ClassDiagram.pdf">
 		<img src="./Diagrams/ClassDiagram.png" width="700">
 	</a>
 </p>
 
-
-</object>
+## Sequence diagram
+<p align="center">
+	<a href="./Diagrams/SequenceDiagram.pdf">
+		<img src="./Diagrams/SequenceDiagram.png" width="500">
+	</a>
+</p>
