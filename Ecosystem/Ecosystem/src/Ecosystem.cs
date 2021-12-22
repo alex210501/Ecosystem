@@ -19,7 +19,7 @@ namespace Ecosystem
             Graphics.IsFullScreen = false;
             Graphics.ApplyChanges();
 
-            GenerateLife(10, 10, 10);
+            GenerateLife(10, 20, 10);
 
             base.Initialize();
         }

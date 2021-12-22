@@ -18,7 +18,7 @@ namespace Ecosystem
         protected static readonly float healthToGive = 20; // Life to give, when we convert life to energy
         protected static readonly float reproductionDesireThreshold = 70;
         protected static readonly float hungerThreshold = 40;
-        protected static readonly float reproductionDesirePerSecond = 10;
+        protected static readonly float reproductionDesirePerSecond = 20;
         protected static readonly float hungerPerSecond = 10;
         protected static readonly float energyPerSecond = 10;
 
