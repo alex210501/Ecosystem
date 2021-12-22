@@ -7,6 +7,8 @@ namespace Ecosystem
 {
     public class Ecosystem : EcosystemFunction
     {
+        private Texture2D background;
+
         public Ecosystem() : base() { }
 
         protected override void Initialize()
@@ -26,6 +28,8 @@ namespace Ecosystem
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
+            background = Content.Load<Texture2D>("Pictures/Background/Background");
+
             foreach (Entity entity in Entities)
                 entity.Load();
         }
@@ -43,6 +47,13 @@ namespace Ecosystem
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            Rectangle destination = new Rectangle(0, 0, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
+            Rectangle source = new Rectangle(0, 0, background.Width, background.Height);
+
+            SpriteBatch.Begin();
+            SpriteBatch.Draw(background, destination, source, Color.White);
+            SpriteBatch.End();
 
             foreach (Entity entity in Entities)
                 entity.Sprite.Draw(gameTime);
