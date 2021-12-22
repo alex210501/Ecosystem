@@ -11,20 +11,7 @@ Launch the `Ecosystem` project to start the simulation.
 ## Framework
 Our simulation is based on the Monogame framework in C#.
 
-```python
-board_weight = 
-	[
-		[1,    1,    1,    1,    1,    None, None, None, None],
-		[1,    2,    2,    2,    2,    1,    None, None, None],
-		[1,    2,    3,    3,    3,    2,    1,    None, None],
-		[1,    2,    3,    4,    4,    3,    2,    1,    None],
-		[1,    2,    3,    4,    5,    4,    3,    2,    1   ],
-		[None, 1,    2,    3,    4,    4,    3,    2,    1   ],
-		[None, None, 1,    2,    3,    3,    3,    2,    1   ],
-		[None, None, None, 1,    2,    2,    2,    2,    1   ],
-		[None, None, None, None, 1,    1,    1,    1,    1   ]
-	]
-```
+![Screenshot]"""(screenshot.png)"""
 
 The priority value change for each **move possibility**.
 
