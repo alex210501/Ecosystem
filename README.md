@@ -9,7 +9,7 @@ Simulation of an Ecosystem using Monogame
 Launch the `Ecosystem` project to start the simulation.
 
 ## Framework
-Our simulation is based on the monogame framework in C#.
+Our simulation is based on the Monogame framework in C#.
 
 ```python
 board_weight = 
