@@ -15,7 +15,6 @@ namespace Ecosystem
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
-        //TODO: Test for the moment
         private List<Entity> entities;
         private List<Entity> entitiesToAdd;
 
@@ -46,7 +45,6 @@ namespace Ecosystem
             get { return entities; }
         }
 
-        // TODO: Check the collisions
         public void GenerateLife(int carnivoresNumber, int herbivoresNumber, int plantsNumber)
         {
             Random rnd = new Random();
