@@ -11,47 +11,35 @@ Launch the `Ecosystem` project to start the simulation.
 ## Framework
 Our simulation is based on the Monogame framework in C#.
 
-![Screenshot]"""(screenshot.png)"""
+<p align="center">
+	<img src="./ecosystem_image.png" alt="Groudon" width="700">
+</p>
 
-The priority value change for each **move possibility**.
+## Simulation description
+Every entities is represented by a sprite.
+* Carnivorous: Groudon
 
-If no move are found, the AI will give up the game.
+<p align="center">
+	<img src="./Ecosystem/Ecosystem/Content/Pictures/Groudon/Groudon0.png" alt="Groudon" width="50">
+</p>
 
-### Priority assigment
-* Can we push an opposite marble
-	* The priority changes depending where the opposite marble goes on the board. The priority increases when the opposite marble is near of the edge.
-* Go away from the edge of the board
-* Can we be ejected
-* We check if the marble can be ejected in the future
+* Herbivorous: Herbizarre
 
-### Checkloop
-The AI will save the moves done in the past with the corresponding board. The memory size can be changed by edit the variable `MEMORY_SIZE`.
+<p align="center">
+<img src="./Ecosystem/Ecosystem/Content/Pictures/Herbizarre/Herbizarre0.png" alt="Herbizarre" width="50">
+</p>
 
-Before choosing the move, the AI will check if the move and the board hasn't already be done in the past.
+* Plants: SunPlant
+<p align="center">
+	<img src="./Ecosystem/Ecosystem/Content/Pictures/Plants/Plant.png" alt="Plants" width="50" >
+</p>
 
-In the case the game is looping, we'll decrease the priority value.
+* OrganicWaste: Poop
+<p align="center">
+	<img src="./Ecosystem/Ecosystem/Content/Pictures/Poop/Poop0.png" alt="Poop" width="50" >
+</p>
 
-## Libraries
-* sys
-	* Get the arguments passed to the script with `sys.argv`
-* logging
-	* Make print with significant level
-		* `INFO`
-		* `DEBUG`
-		* `WARNING`
-		* `CRITICAL`
-* threading
-	* Use to generate thread
-* json
-	* Generate and read the server's requests
-* random
-	* `shuffle()`
-		* Mixed the differents messages sent to the server
-* copy
-	* `deepcopy()`
-		* Use to generate a copy of the current board
-* socket
-	* Generate a TCP client
-* time
-	* Calcul the function time
-	* Stop the strategy if the timeout is excedeed
+* Meat: Chicken leg
+<p align="center">
+	<img src="./Ecosystem/Ecosystem/Content/Pictures/Meat/Meat0.png" alt="Meat" width="50" >
+</p>
