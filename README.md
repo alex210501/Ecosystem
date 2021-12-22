@@ -43,3 +43,12 @@ Every entities is represented by a sprite.
 <p align="center">
 	<img src="./Ecosystem/Ecosystem/Content/Pictures/Meat/Meat0.png" alt="Meat" width="50" >
 </p>
+
+<p align="center">
+	<a href="./Diagrams/ClassDiagram.pdf">
+		<img src="./Diagrams/ClassDiagram.png" width="700">
+	</a>
+</p>
+
+
+</object>
