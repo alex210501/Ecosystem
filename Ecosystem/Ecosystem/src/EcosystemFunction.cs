@@ -266,6 +266,9 @@ namespace Ecosystem
 
         public void PlantExpands(Plants flowers)
         {
+            if (entities.FindAll(delegate (Entity entity) { return entity is Plants; }).Count >= 30)
+                return;
+
             if (flowers.WantsExpands())
             {
                 Random rnd = new Random();
