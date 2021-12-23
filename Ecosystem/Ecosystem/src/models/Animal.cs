@@ -19,7 +19,7 @@ namespace Ecosystem
         private int minimumSpeed = 50;
         private int maximumPregnancyTime = 9; // 9 seconds
         private int positionErrorReached = 2;
-        protected static readonly float poopDesirePerSecond = 10;
+        protected static readonly float poopDesirePerSecond = 5;
 
         private readonly AnimalSex sex;
         private int visionZoneRadius;

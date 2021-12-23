@@ -325,6 +325,9 @@ namespace Ecosystem
                                                    (int)animal.Sprite.PositionY + animal.VisionZoneRadius);
                 animalInstance.DestinationX = rnd.Next(0, ScreenWidth);
                 animalInstance.DestinationY = rnd.Next(0, ScreenHeight);
+
+                // Give the same energy as the health
+                animalInstance.Health = animal.Health;
                 animalInstance.Sprite.Scale = 0.7f;
                 animalInstance.Load();
 
